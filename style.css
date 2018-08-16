@@ -1,0 +1,97 @@
+.qv-object-KpiTable div.qv-object-content-container {
+    overflow: auto;
+}
+/*.qv-object-KpiTable td,
+.qv-object-KpiTable th {
+	border-top: 0px solid #fff;
+	border-bottom: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	vertical-align: middle;
+	cursor: default;
+	font-size: 12px;
+}*/
+.qv-object-KpiTable td.numeric {
+    text-align: right;
+}
+
+.qv-object-KpiTable button {
+    width: 100%;
+}
+
+.qv-object-KpiTable .group-text {
+    color: midnightblue;
+    font-size: 20px;
+}
+
+.qv-object-KpiTable .group-index {
+    border-color: darkblue;
+    background-color: midnightblue;
+    color: white;
+    width: 15px;
+    height: 15px;
+    font-size: 12px;
+    border-radius: 15px;
+    padding: 3px;
+    margin: auto;
+}
+.qv-object-KpiTable .primary-text {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.qv-object-KpiTable .subtitle-text {
+    font-size: 10px;
+}
+
+.qv-object-KpiTable .table-formated {
+    vertical-align: middle;
+}
+
+    .qv-object-KpiTable .table-formated > thead {
+        background-color: midnightblue;
+        color: white;
+    }
+
+        .qv-object-KpiTable .table-formated > thead > tr {
+            height: 40px;
+        }
+
+            .qv-object-KpiTable .table-formated > thead > tr > th {
+                vertical-align: middle;
+                padding: 2px;
+            }
+
+    .qv-object-KpiTable .table-formated > tbody > tr > td {
+        padding: 2px;
+    }
+
+    .qv-object-KpiTable .table-formated > tbody > tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+.text-left {
+    text-align: left !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.text-right {
+    text-align: right !important;
+}
+
+.text-success {
+    color: rgb(0,176,80);
+}
+
+.text-danger {
+    color: red;
+}
+
+.text-info {
+    color: dodgerblue;
+}

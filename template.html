@@ -1,0 +1,66 @@
+<div qv-extension style="height: 100%; position: relative; overflow: auto;">
+    <table class="table-formated">
+        <thead>
+            <tr>
+                <th ng-show="cubeIsGrouped" ng-click="table.headers[1].orderBy()"></th>
+                <th ng-repeat="head in table.headers track by $index"
+                    ng-show="($index > 1 || ($index > 0 && !cubeIsGrouped)) && !IsSubtitle($index)"
+                    ng-click="head.orderBy()"
+                    class="{{AlignClass($index)}}">
+                    <!--{{head.qFallbackTitle}}-->
+                    {{ table.headers[layout.qHyperCube.qColumnOrder[$index]].qFallbackTitle}}
+                </th>
+                <th ng-show="layout.props.showChart" class="text-center">
+                    Gr&aacute;fica
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat-start="group in cubeGrouped track by $index" ng-init="$groupIndex = $index" ng-click="table.rows[group.data[0]].cells[1].select($event)">
+                <td colspan="2" ng-show="group.category != ''">
+                    <span class="group-text">{{group.category}}</span>
+                </td>
+            </tr>
+            <tr ng-repeat="rowIndexAux in group.data track by $index" ng-init="$rowIndex = $index">
+                <td rowspan="{{group.data.length}}" ng-show="$rowIndex == 0 && group.category != ''" class="text-center">
+                    <div class="group-index">{{$groupIndex+1}}</div>
+                </td>
+                <td ng-repeat="cell in table.rows[rowIndexAux].cells track by $index"
+                    ng-show="($index > 1 || ($index > 0 && !cubeIsGrouped)) && !IsSubtitle($index)"
+                    class="selectable {{AlignClass($index)}}"
+                    ng-class="{'selected': cell.selected}"
+                    ng-click="cell.select($event)">
+                    <!-- Arrow -->
+                    <span ng-show="ShowArrow($index)">
+                        <span ng-show="{{cell.qNum > 0}}" class="text-success"><i class="lui-icon lui-icon--triangle-top" style="font-size:25px;"></i></span>
+                        <span ng-show="{{cell.qNum < 0}}" class="text-danger"><i class="lui-icon lui-icon--triangle-bottom" style="font-size:25px;"></i></span>
+                    </span><!-- Arrow End -->
+                    <span ng-show="!ShowArrow($index)">
+                        <!-- Cell -->
+                        <span ng-class="{'primary-text':$index==2}" ng-show="!IsIconClass($index)">
+                            {{cell.qText}}
+                        </span>
+                        <span ng-class="{'primary-text':$index==2}" ng-show="IsIconClass($index)">
+                            <i class="{{cell.qText}}"></i>
+                        </span>
+                        <i class="{{IconClass($index)}}"></i>
+                        <i class="lui-icon lui-icon--help text-info" ng-show="ShowHelp($index)"></i>
+                        <!-- Cell End -->
+                        <!-- Subtitle -->
+                        <span ng-show="$index==2">
+                            <br />
+                            <span ng-repeat="subtitle in table.rows[rowIndexAux].cells" ng-show="IsSubtitle($index)" class="subtitle-text">
+                                {{subtitle.qText}}
+                            </span>
+                        </span><!-- Subtitle End -->
+                    </span>
+                </td>
+                <td ng-show="layout.props.showChart" class="text-center">
+                    gr&aacute;fica
+                </td>
+            </tr>
+            <tr ng-repeat-end></tr>
+        </tbody>
+    </table>
+    <button ng-if="table.rowCount>table.rows.length" ng-click="table.getMoreData()" class="lui-button more">More...</button>
+</div>
