@@ -5,15 +5,15 @@ define([], function () {
             qDimensions: [],
             qMeasures: [],
             qInitialDataFetch: [{
-                qWidth: 10,
-                qHeight: 50
+                qWidth: 15,
+                qHeight: 20
             }]
         },
         cube2: {
             qHyperCubeDef: {
                 qInitialDataFetch: [
                     {
-                        qHeight: 1500,
+                        qHeight: 2000,
                         qWidth: 3
                     }
                 ],

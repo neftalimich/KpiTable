@@ -4,8 +4,9 @@ define([
     "./initial-properties",
     "./properties",
     "text!./style.css",
-    "text!./template.html"
-], function (qlik, $, initProps, props, cssContent, template) {
+    "text!./template.html",
+    "./js/Chart"
+], function (qlik, $, initProps, props, cssContent, template, chart) {
     'use strict';
     $("<style>").html(cssContent).appendTo("head");
     $('<link rel="stylesheet" type="text/css" href="/extensions/KpiTable/css/font-awesome.css">').html("").appendTo("head");
@@ -56,7 +57,7 @@ define([
                 if ($scope.layout.qHyperCube.qDataPages[0].qMatrix[0].length > 2) {
                     if ($scope.layout.props.categorize) { // IsCategory
                         let qMatrixCopy = JSON.parse(JSON.stringify($scope.layout.qHyperCube.qDataPages[0].qMatrix));
-                        let categories = qMatrixCopy.reduce(function (obj, item,index) {
+                        let categories = qMatrixCopy.reduce(function (obj, item, index) {
                             obj[item[1].qText] = obj[item[1].qText] || [];
                             obj[item[1].qText].push(index);
                             return obj;
@@ -134,10 +135,203 @@ define([
             $scope.ShowFrame = function (id) {
                 //console.log("id: ",  $scope.layout.props.urlIframe, id);
                 $scope.sFrame = true;
-                $scope.idk =
-                    $scope.layout.props.urlIframe
-                    + id;
+                $scope.idk = $scope.layout.props.urlIframe + id;
             };
+
+
+            // --------------------------- CUBE2
+            var qDimensionTemplate = {
+                qDef: {
+                    qGrouping: "N",
+                    qFieldDefs: "CHANGE_ME",
+                    qFieldLabels: [""],
+                    autoSort: false,
+                    qSortCriterias: [
+                        {
+                            qSortByAscii: 0
+                        }
+                    ]
+                },
+                qNullSuppression: false
+            };
+            var qMeasureTemplate = {
+                qDef: {
+                    qLabel: "",
+                    qDescription: "",
+                    qTags: [""],
+                    qGrouping: "N",
+                    qDef: "CHANGE_ME",
+                    qNumFormat: {
+                        qDec: ".",
+                        qFmt: "#,##0.00",
+                        qThou: ",",
+                        qType: "F",
+                        qUseThou: 0,
+                        qnDec: 2
+                    },
+                    autoSort: false
+                },
+                qSortBy: {
+                    qSortByState: 0,
+                    qSortByFrequency: 0,
+                    qSortByNumeric: 0,
+                    qSortByAscii: 0,
+                    qSortByLoadOrder: 0,
+                    qSortByExpression: 0,
+                    qExpression: {
+                        qv: ""
+                    }
+                }
+            };
+
+            $scope.$watchCollection("layout.cube2Dimensions", function (newVal) {
+                let qDimensions = [];
+                angular.forEach(newVal, function (value, key) {
+                    if (value.dimension != "") {
+                        let qDimAux = JSON.parse(JSON.stringify(qDimensionTemplate));
+                        qDimAux.qDef.qLabel = [value.label];
+                        qDimAux.qDef.qFieldDefs = [value.dimension];
+                        qDimensions.push(qDimAux);
+                    }
+                });
+
+                $scope.backendApi.applyPatches([
+                    {
+                        "qPath": "/cube2/qHyperCubeDef/qDimensions",
+                        "qOp": "replace",
+                        "qValue": JSON.stringify(qDimensions)
+                    }
+                ], false);
+            });
+            $scope.$watchCollection("layout.cube2Measures", function (newVal) {
+                let qMeasures = [];
+                angular.forEach(newVal, function (value, key) {
+                    if (value.measure != "") {
+                        let qMeasAux = JSON.parse(JSON.stringify(qMeasureTemplate));
+                        qMeasAux.qDef.qLabel = value.label;
+                        qMeasAux.qDef.qDef = value.measure;
+                        qMeasures.push(qMeasAux);
+                    }
+                });
+
+                $scope.backendApi.applyPatches([
+                    {
+                        "qPath": "/cube2/qHyperCubeDef/qMeasures",
+                        "qOp": "replace",
+                        "qValue": JSON.stringify(qMeasures)
+                    }
+                ], false);
+            });
+            $scope.$watchCollection("layout.cube2.qHyperCube.qDataPages", function (newVal) {
+                angular.element(document).ready(function () {
+                    $scope.GroupDataChart();
+                    $scope.LoadCharts();
+                });
+            });
+            // --------------------------- CHART
+            angular.element(document).ready(function () {
+                $scope.GroupDataChart();
+                $scope.LoadCharts();
+            });
+
+            $scope.GroupDataChart = function () {
+                if ($scope.layout.cube2.qHyperCube.qDimensionInfo.length > 0) {
+                    var qMatrixCopy = JSON.parse(JSON.stringify($scope.layout.cube2.qHyperCube.qDataPages[0].qMatrix));
+                    if (qMatrixCopy[0].length > 2) {
+                        var groups = qMatrixCopy.reduce(function (obj, item) {
+                            obj[item[0].qText] = obj[item[0].qText] || [];
+                            obj[item[0].qText].push(item);
+                            return obj;
+                        }, {});
+                        $scope.dataGrouped = Object.keys(groups).map(function (key) {
+                            return { name: key, data: groups[key] };
+                        });
+
+                        angular.forEach($scope.dataGrouped, function (value, key) {
+                            value.data.sort(function compare(a, b) {
+                                if (a[1].qNum < b[1].qNum)
+                                    return -1;
+                                if (a[1].qNum > b[1].qNum)
+                                    return 1;
+                                return 0;
+                            });
+                        });
+                    }
+                    //console.log($scope.dataGrouped);
+                }
+            };
+            var charts = [];
+            $scope.LoadCharts = function () {
+                //console.log("charts",charts);
+                //console.log("dataGrouped", $scope.dataGrouped);
+                angular.forEach($scope.dataGrouped, function (value, key) {
+                    let ctx = $("#chart-" + value.name);
+                    if (ctx.length) {
+                        //console.log("ctx", ctx);
+                        let dataAux = [];
+                        let labelsAux = [];
+
+                        if (charts[key] != undefined || charts[key] != null) {
+                            //console.log("Exist-charts[key]", charts[key]);
+                            dataAux = charts[key].config.data.datasets[0].data;
+                            labelsAux = charts[key].config.data.labels;
+                            charts[key].destroy();
+                            chart[key] = {};
+                        } else {
+                            for (let i = 0; i < value.data.length; i++) {
+                                dataAux.push(value.data[i][2].qNum);
+                                labelsAux.push(value.data[i][1].qText);
+                            }
+                        }
+
+                        let myLineChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: labelsAux,
+                                datasets: [{
+                                    data: dataAux,
+                                    label: value.name,
+                                    borderColor: "#3e95cd",
+                                    fill: false
+                                }]
+                            },
+                            options: {
+                                legend: { display: false },
+                                title: { display: false },
+                                borderWidth: 1,
+                                elements: {
+                                    point: { radius: 3 },
+                                    pointHoverRadius: { radius: 4 }
+                                },
+                                scales: {
+                                    xAxes: [{
+                                        display: false
+                                    }],
+                                    yAxes: [{
+                                        display: false
+                                    }]
+                                },
+                                layout: {
+                                    padding: {
+                                        left: 5,
+                                        right: 5,
+                                        top: 0,
+                                        bottom: 0
+                                    }
+                                },
+                                responsive: false,
+                                tooltips: {
+                                    displayColors: false
+                                }
+                            }
+                        });
+                        charts[key] = charts[key] || [];
+                        charts[key] = myLineChart;
+                        //console.log("New-charts[key]", charts[key]);
+                    }
+                });
+            };
+            // ---------------------------
         }]
     };
 });
