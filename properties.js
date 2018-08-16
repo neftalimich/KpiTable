@@ -36,8 +36,8 @@ define([], function () {
                     },
                     icon: {
                         type: "boolean",
-                        ref: "qDef.haveIcon",
-                        label: "Icono",
+                        ref: "qDef.showHelpIcon",
+                        label: "Show Help Icon",
                         defaultValue: false
                     }
                 }
@@ -87,7 +87,8 @@ define([], function () {
                     iconClass: {
                         type: "string",
                         ref: "qDef.iconClass",
-                        label: "Add Icon (class name)"
+                        label: "Add Icon (class name)",
+                        defaultValue: ""
                     }
                 }
             },
@@ -102,7 +103,7 @@ define([], function () {
                         type: "array",
                         ref: "cube2Dimensions",
                         label: "List of Dimensions",
-                        itemTitleRef: "dimension",
+                        itemTitleRef: "label",
                         allowAdd: true,
                         allowRemove: true,
                         addTranslation: "Add Dimension",
@@ -175,6 +176,20 @@ define([], function () {
                                 }],
                                 defaultValue: true
                             },
+                            showGroupIndex: {
+                                type: "boolean",
+                                component: "switch",
+                                ref: "props.showGroupIndex",
+                                label: "Show Group Index",
+                                options: [{
+                                    value: true,
+                                    label: "Yes"
+                                }, {
+                                    value: false,
+                                    label: "No"
+                                }],
+                                defaultValue: true
+                            },
                             showChart: {
                                 type: "boolean",
                                 component: "switch",
@@ -194,6 +209,16 @@ define([], function () {
                                 ref: "props.columnOrder",
                                 label: "Ordenar Columnas",
                                 defaultValue: "0,1,2"
+                            },
+                            url1: {
+                                type: "string",
+                                ref: "props.urlChart",
+                                label: "URL Chart"
+                            },
+                            url2: {
+                                type: "string",
+                                ref: "props.urlIframe",
+                                label: "URL iFrame"
                             }
                         }
                     }

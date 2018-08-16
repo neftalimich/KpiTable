@@ -30,9 +30,15 @@ define([
         controller: ['$scope', function ($scope) {
             console.log("layout", $scope.layout);
 
-
             $scope.$watchCollection("layout.qHyperCube.qDataPages", function (newValue) {
                 $scope.ReloadCube();
+            });
+
+            $scope.$watchCollection("layout.qHyperCube.qDimensionInfo", function (newValue) {
+                $scope.GetColumnConfiguration();
+            });
+            $scope.$watchCollection("layout.qHyperCube.qMeasureInfo", function (newValue) {
+                $scope.GetColumnConfiguration();
             });
 
             $scope.$watchCollection("layout.props.categorize", function (newValue) {
@@ -41,6 +47,7 @@ define([
 
             $scope.$watchCollection("layout.props.columnOrder", function (newValue) {
                 $scope.PatchColumnOrder(newValue);
+                $scope.GetColumnConfiguration();
             });
 
             $scope.ReloadCube = function () {
@@ -88,53 +95,48 @@ define([
                 ], false);
             };
 
-            $scope.IsSubtitle = function (index) {
-                let indexAux = $scope.layout.qHyperCube.qColumnOrder[index];
-                if (indexAux < $scope.layout.qHyperCube.qDimensionInfo.length) {
-                    return $scope.layout.qHyperCube.qDimensionInfo[indexAux].isSubtitle;
-                } else {
-                    return $scope.layout.qHyperCube.qMeasureInfo[indexAux - $scope.layout.qHyperCube.qDimensionInfo.length].isSubtitle;
+            $scope.GetColumnConfiguration = function () {
+                $scope.columnConfiguration = [];
+                angular.forEach($scope.layout.qHyperCube.qColumnOrder, function (value, key) {
+                    let indexAux = value;
+                    if (indexAux < $scope.layout.qHyperCube.qDimensionInfo.length) {
+                        $scope.columnConfiguration.push({
+                            isSubtitle: $scope.layout.qHyperCube.qDimensionInfo[indexAux].isSubtitle,
+                            textAlign: $scope.layout.qHyperCube.qDimensionInfo[indexAux].textAlign,
+                            isIconClass: $scope.layout.qHyperCube.qDimensionInfo[indexAux].isIconClass,
+                            iconClass: $scope.layout.qHyperCube.qDimensionInfo[indexAux].iconClass,
+                            showHelpIcon: $scope.layout.qHyperCube.qDimensionInfo[indexAux].showHelpIcon,
+                            isArrow: $scope.layout.qHyperCube.qDimensionInfo[indexAux].isArrow
+                        });
+                    } else {
+                        $scope.columnConfiguration.push({
+                            isSubtitle: $scope.layout.qHyperCube.qMeasureInfo[indexAux - $scope.layout.qHyperCube.qDimensionInfo.length].isSubtitle,
+                            textAlign: $scope.layout.qHyperCube.qMeasureInfo[indexAux - $scope.layout.qHyperCube.qDimensionInfo.length].textAlign,
+                            isIconClass: $scope.layout.qHyperCube.qMeasureInfo[indexAux - $scope.layout.qHyperCube.qDimensionInfo.length].isIconClass,
+                            iconClass: $scope.layout.qHyperCube.qMeasureInfo[indexAux - $scope.layout.qHyperCube.qDimensionInfo.length].iconClass,
+                            showHelpIcon: $scope.layout.qHyperCube.qMeasureInfo[indexAux - $scope.layout.qHyperCube.qDimensionInfo.length].showHelpIcon,
+                            isArrow: $scope.layout.qHyperCube.qMeasureInfo[indexAux - $scope.layout.qHyperCube.qDimensionInfo.length].isArrow
+                        });
+                    }
+                });
+                //console.log("columnConfiguration", $scope.columnConfiguration);
+            };
+
+            $scope.GoUrl = function (id) {
+                if (id.length > 0) {
+                    //var win = window.open($scope.layout.props.urlChart + id, '_blank');
+                    //win.focus();
+                    window.location.href = $scope.layout.props.urlChart + id;
                 }
             };
-            $scope.AlignClass = function (index) {
-                let indexAux = $scope.layout.qHyperCube.qColumnOrder[index];
-                if (indexAux < $scope.layout.qHyperCube.qDimensionInfo.length) {
-                    return $scope.layout.qHyperCube.qDimensionInfo[indexAux].textAlign;
-                } else {
-                    return $scope.layout.qHyperCube.qMeasureInfo[indexAux - $scope.layout.qHyperCube.qDimensionInfo.length].textAlign;
-                }
-            };
-            $scope.IsIconClass = function (index) {
-                let indexAux = $scope.layout.qHyperCube.qColumnOrder[index];
-                if (indexAux < $scope.layout.qHyperCube.qDimensionInfo.length) {
-                    return $scope.layout.qHyperCube.qDimensionInfo[indexAux].isIconClass;
-                } else {
-                    return $scope.layout.qHyperCube.qMeasureInfo[indexAux - $scope.layout.qHyperCube.qDimensionInfo.length].isIconClass;
-                }
-            };
-            $scope.IconClass = function (index) {
-                let indexAux = $scope.layout.qHyperCube.qColumnOrder[index];
-                if (indexAux < $scope.layout.qHyperCube.qDimensionInfo.length) {
-                    return "";
-                } else {
-                    return $scope.layout.qHyperCube.qMeasureInfo[indexAux - $scope.layout.qHyperCube.qDimensionInfo.length].iconClass;
-                }
-            };
-            $scope.ShowHelp = function (index) {
-                let indexAux = $scope.layout.qHyperCube.qColumnOrder[index];
-                if (indexAux < $scope.layout.qHyperCube.qDimensionInfo.length) {
-                    return $scope.layout.qHyperCube.qDimensionInfo[indexAux].haveIcon;
-                } else {
-                    return false;
-                }
-            };
-            $scope.ShowArrow = function (index) {
-                let indexAux = $scope.layout.qHyperCube.qColumnOrder[index];
-                if (indexAux >= $scope.layout.qHyperCube.qDimensionInfo.length) {
-                    return $scope.layout.qHyperCube.qMeasureInfo[indexAux - $scope.layout.qHyperCube.qDimensionInfo.length].isArrow;
-                } else {
-                    return false;
-                }
+
+            $scope.sFrame = false;
+            $scope.ShowFrame = function (id) {
+                //console.log("id: ",  $scope.layout.props.urlIframe, id);
+                $scope.sFrame = true;
+                $scope.idk =
+                    $scope.layout.props.urlIframe
+                    + id;
             };
         }]
     };

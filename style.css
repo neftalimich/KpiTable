@@ -46,6 +46,15 @@
     font-size: 10px;
 }
 
+.qv-object-KpiTable .bg-white {
+    background-color: white !important;
+}
+
+.qv-object-KpiTable .chart {
+    width: 120px !important;
+    height: 40px !important;
+}
+
 .qv-object-KpiTable .table-formated {
     vertical-align: middle;
 }
