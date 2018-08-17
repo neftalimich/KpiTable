@@ -45,6 +45,12 @@ define([], function () {
                         ref: "qDef.showHelpIcon",
                         label: "Show Help Icon",
                         defaultValue: false
+                    },
+                    columnSize: {
+                        type: "number",
+                        ref: "qDef.columnSize",
+                        label: "Column Size",
+                        defaultValue: ""
                     }
                 }
             },
@@ -101,6 +107,12 @@ define([], function () {
                         ref: "qDef.iconClass",
                         label: "Add Icon (class name)",
                         defaultValue: ""
+                    },
+                    columnSize: {
+                        type: "number",
+                        ref: "qDef.columnSize",
+                        label: "Column Size",
+                        defaultValue: 0
                     }
                 }
             },
@@ -233,6 +245,18 @@ define([], function () {
                                     label: "No"
                                 }],
                                 defaultValue: true
+                            },
+                            chartHeight: {
+                                type: "number",
+                                ref: "props.chartHeight",
+                                label: "Chart Height",
+                                defaultValue: 40
+                            },
+                            chartWidth: {
+                                type: "number",
+                                ref: "props.chartWidth",
+                                label: "Chart Width",
+                                defaultValue: 150
                             },
                             columnOrder: {
                                 type: "string",

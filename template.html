@@ -6,8 +6,8 @@
                 <th ng-repeat="head in table.headers track by $index"
                     ng-show="($index > 1 || ($index > 0 && !cubeIsGrouped)) && !columnConfiguration[$index].isSubtitle"
                     ng-click="head.orderBy()"
-                    class="{{columnConfiguration[$index].textAlign}}">
-                    <!--{{head.qFallbackTitle}}-->
+                    class="{{columnConfiguration[$index].textAlign}}"
+                    ng-style="columnConfiguration[$index].columnSize>0 && {'width':columnConfiguration[$index].columnSize+'px'}">
                     {{ table.headers[layout.qHyperCube.qColumnOrder[$index]].qFallbackTitle}}
                 </th>
                 <th ng-show="layout.props.showChart" class="text-center">
@@ -56,7 +56,10 @@
                     </span>
                 </td>
                 <td ng-show="layout.props.showChart" class="text-center">
-                    <canvas id="{{ 'chart-' + table.rows[rowIndexAux].cells[0].qText }}" class="chart" ng-click="GoUrl(table.rows[rowIndexAux].cells[0].qText)"></canvas>
+                    <canvas id="{{ 'chart-' + table.rows[rowIndexAux].cells[0].qText }}" 
+                            ng-style="{'height':layout.props.chartHeight,'width':layout.props.chartWidth+'px'}"
+                            class="chart"
+                            ng-click="GoUrl(table.rows[rowIndexAux].cells[0].qText)"></canvas>
                 </td>
             </tr>
             <tr ng-repeat-end></tr>

@@ -109,7 +109,8 @@ define([
                             isIconClass: $scope.layout.qHyperCube.qDimensionInfo[indexAux].isIconClass,
                             iconClass: $scope.layout.qHyperCube.qDimensionInfo[indexAux].iconClass,
                             showHelpIcon: $scope.layout.qHyperCube.qDimensionInfo[indexAux].showHelpIcon,
-                            isArrow: $scope.layout.qHyperCube.qDimensionInfo[indexAux].isArrow
+                            isArrow: $scope.layout.qHyperCube.qDimensionInfo[indexAux].isArrow,
+                            columnSize: $scope.layout.qHyperCube.qDimensionInfo[indexAux].columnSize
                         });
                     } else {
                         indexAux = indexAux - $scope.layout.qHyperCube.qDimensionInfo.length;
@@ -120,7 +121,8 @@ define([
                             isIconClass: $scope.layout.qHyperCube.qMeasureInfo[indexAux].isIconClass,
                             iconClass: $scope.layout.qHyperCube.qMeasureInfo[indexAux].iconClass,
                             showHelpIcon: $scope.layout.qHyperCube.qMeasureInfo[indexAux].showHelpIcon,
-                            isArrow: $scope.layout.qHyperCube.qMeasureInfo[indexAux].isArrow
+                            isArrow: $scope.layout.qHyperCube.qMeasureInfo[indexAux].isArrow,
+                            columnSize: $scope.layout.qHyperCube.qMeasureInfo[indexAux].columnSize
                         });
                     }
                 });
