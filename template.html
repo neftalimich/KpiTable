@@ -18,12 +18,12 @@
         <tbody>
             <tr ng-repeat-start="group in cubeGrouped track by $index" ng-init="$groupIndex = $index" ng-click="table.rows[group.data[0]].cells[1].select($event)">
                 <td colspan="2" ng-show="group.category != ''">
-                    <span class="group-text">{{group.category}}</span>
+                    <span class="text-group">{{group.category}}</span>
                 </td>
             </tr>
             <tr ng-repeat="rowIndexAux in group.data track by $index" ng-init="$rowIndex = $index">
                 <td rowspan="{{group.data.length}}" ng-show="$rowIndex == 0 && group.category != ''" class="text-center bg-white">
-                    <div class="group-index" ng-show="layout.props.showGroupIndex">{{$groupIndex+1}}</div>
+                    <div class="index-group" ng-show="layout.props.showGroupIndex">{{$groupIndex+1}}</div>
                 </td>
                 <td ng-repeat="cell in table.rows[rowIndexAux].cells track by $index"
                     ng-show="($index > 1 || ($index > 0 && !cubeIsGrouped)) && !columnConfiguration[$index].isSubtitle"
@@ -37,10 +37,10 @@
                     <span ng-show="!columnConfiguration[$index].isArrow">
                         <!-- Cell -->
                         <span ng-click="cell.select($event)">
-                            <span ng-class="{'primary-text':$index==2}" ng-show="!columnConfiguration[$index].isIconClass">
+                            <span class="{{columnConfiguration[$index].textClass}}" ng-show="!columnConfiguration[$index].isIconClass">
                                 {{cell.qText}}
                             </span>
-                            <span ng-class="{'primary-text':$index==2}" ng-show="columnConfiguration[$index].isIconClass">
+                            <span class="{{columnConfiguration[$index].textClass}}" ng-show="columnConfiguration[$index].isIconClass">
                                 <i class="{{cell.qText}}"></i>
                             </span>
                         </span><!-- Cell End -->
@@ -49,7 +49,7 @@
                         <!-- Subtitle -->
                         <span ng-show="$index==2">
                             <br />
-                            <span ng-repeat="subtitle in table.rows[rowIndexAux].cells" ng-show="columnConfiguration[$index].isSubtitle" class="subtitle-text">
+                            <span ng-repeat="subtitle in table.rows[rowIndexAux].cells" ng-show="columnConfiguration[$index].isSubtitle" class="text-subtitle">
                                 {{subtitle.qText}}
                             </span>
                         </span><!-- Subtitle End -->

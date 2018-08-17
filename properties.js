@@ -11,7 +11,7 @@ define([], function () {
                     textAlign: {
                         type: "string",
                         component: "dropdown",
-                        label: "Alinear",
+                        label: "Text Align",
                         ref: "qDef.textAlign",
                         options: [
                             {
@@ -27,6 +27,12 @@ define([], function () {
                             }
                         ],
                         defaultValue: "text-left"
+                    },
+                    textClass: {
+                        type: "string",
+                        label: "Text Class",
+                        ref: "qDef.textClass",
+                        defaultValue: ""
                     },
                     subtitle: {
                         type: "boolean",
@@ -65,6 +71,12 @@ define([], function () {
                             }
                         ],
                         defaultValue: "text-left"
+                    },
+                    textClass: {
+                        type: "string",
+                        label: "Text Class",
+                        ref: "qDef.textClass",
+                        defaultValue: ""
                     },
                     subtitle: {
                         type: "boolean",
@@ -144,6 +156,24 @@ define([], function () {
                                 label: "Measure Expression",
                                 expression: "always",
                                 expressionType: "measure"
+                            },
+                            qType: {
+                                type: "string",
+                                ref: "qType",
+                                label: "qType",
+                                defaultValue: "F"
+                            },
+                            qFmt: {
+                                type: "string",
+                                ref: "qFmt",
+                                label: "qFmt",
+                                defaultValue: "#,##0.00"
+                            },
+                            qnDec: {
+                                type: "integer",
+                                ref: "qnDec",
+                                label: "qnDec",
+                                defaultValue: 2
                             }
                         }
                     }
@@ -207,7 +237,7 @@ define([], function () {
                             columnOrder: {
                                 type: "string",
                                 ref: "props.columnOrder",
-                                label: "Ordenar Columnas",
+                                label: "Column Order",
                                 defaultValue: "0,1,2"
                             },
                             url1: {

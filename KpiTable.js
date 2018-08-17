@@ -10,6 +10,7 @@ define([
     'use strict';
     $("<style>").html(cssContent).appendTo("head");
     $('<link rel="stylesheet" type="text/css" href="/extensions/KpiTable/css/font-awesome.css">').html("").appendTo("head");
+
     return {
         template: template,
         initialProperties: initProps,
@@ -102,6 +103,7 @@ define([
                     let indexAux = value;
                     if (indexAux < $scope.layout.qHyperCube.qDimensionInfo.length) {
                         $scope.columnConfiguration.push({
+                            textClass: $scope.layout.qHyperCube.qDimensionInfo[indexAux].textClass,
                             isSubtitle: $scope.layout.qHyperCube.qDimensionInfo[indexAux].isSubtitle,
                             textAlign: $scope.layout.qHyperCube.qDimensionInfo[indexAux].textAlign,
                             isIconClass: $scope.layout.qHyperCube.qDimensionInfo[indexAux].isIconClass,
@@ -110,13 +112,15 @@ define([
                             isArrow: $scope.layout.qHyperCube.qDimensionInfo[indexAux].isArrow
                         });
                     } else {
+                        indexAux = indexAux - $scope.layout.qHyperCube.qDimensionInfo.length;
                         $scope.columnConfiguration.push({
-                            isSubtitle: $scope.layout.qHyperCube.qMeasureInfo[indexAux - $scope.layout.qHyperCube.qDimensionInfo.length].isSubtitle,
-                            textAlign: $scope.layout.qHyperCube.qMeasureInfo[indexAux - $scope.layout.qHyperCube.qDimensionInfo.length].textAlign,
-                            isIconClass: $scope.layout.qHyperCube.qMeasureInfo[indexAux - $scope.layout.qHyperCube.qDimensionInfo.length].isIconClass,
-                            iconClass: $scope.layout.qHyperCube.qMeasureInfo[indexAux - $scope.layout.qHyperCube.qDimensionInfo.length].iconClass,
-                            showHelpIcon: $scope.layout.qHyperCube.qMeasureInfo[indexAux - $scope.layout.qHyperCube.qDimensionInfo.length].showHelpIcon,
-                            isArrow: $scope.layout.qHyperCube.qMeasureInfo[indexAux - $scope.layout.qHyperCube.qDimensionInfo.length].isArrow
+                            textClass: $scope.layout.qHyperCube.qMeasureInfo[indexAux].textClass,
+                            isSubtitle: $scope.layout.qHyperCube.qMeasureInfo[indexAux].isSubtitle,
+                            textAlign: $scope.layout.qHyperCube.qMeasureInfo[indexAux].textAlign,
+                            isIconClass: $scope.layout.qHyperCube.qMeasureInfo[indexAux].isIconClass,
+                            iconClass: $scope.layout.qHyperCube.qMeasureInfo[indexAux].iconClass,
+                            showHelpIcon: $scope.layout.qHyperCube.qMeasureInfo[indexAux].showHelpIcon,
+                            isArrow: $scope.layout.qHyperCube.qMeasureInfo[indexAux].isArrow
                         });
                     }
                 });
@@ -210,6 +214,9 @@ define([
                         let qMeasAux = JSON.parse(JSON.stringify(qMeasureTemplate));
                         qMeasAux.qDef.qLabel = value.label;
                         qMeasAux.qDef.qDef = value.measure;
+                        qMeasAux.qDef.qNumFormat.qType = value.qType ? value.qType : "F";
+                        qMeasAux.qDef.qNumFormat.qFmt = value.qFmt ? value.qFmt : "#,##0.00";
+                        qMeasAux.qDef.qNumFormat.qnDec = value.qnDec ? value.qnDec : 2;
                         qMeasures.push(qMeasAux);
                     }
                 });
@@ -221,6 +228,12 @@ define([
                         "qValue": JSON.stringify(qMeasures)
                     }
                 ], false);
+            });
+            $scope.$watchCollection("layout.qHyperCube.qDataPages", function (newVal) {
+                angular.element(document).ready(function () {
+                    $scope.GroupDataChart();
+                    $scope.LoadCharts();
+                });
             });
             $scope.$watchCollection("layout.cube2.qHyperCube.qDataPages", function (newVal) {
                 angular.element(document).ready(function () {
@@ -279,7 +292,7 @@ define([
                             chart[key] = {};
                         } else {
                             for (let i = 0; i < value.data.length; i++) {
-                                dataAux.push(value.data[i][2].qNum);
+                                dataAux.push(parseFloat(value.data[i][2].qText));
                                 labelsAux.push(value.data[i][1].qText);
                             }
                         }
@@ -321,7 +334,12 @@ define([
                                 },
                                 responsive: false,
                                 tooltips: {
-                                    displayColors: false
+                                    enabled: false,
+                                    displayColors: false,
+                                    bodyFontSize: 16
+                                },
+                                animation: {
+                                    duration: 0
                                 }
                             }
                         });
