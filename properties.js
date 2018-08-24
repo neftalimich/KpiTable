@@ -1,5 +1,29 @@
-define([], function () {
+define([
+    "qlik",
+    'ng!$q'
+], function (qlik,$q) {
     "use strict";
+
+    var app = qlik.currApp();
+    var getSheetList = function () {
+        var defer = $q.defer();
+        app.getAppObjectList(function (data) {
+            var sheets = [];
+            var sortedData = _.sortBy(data.qAppObjectList.qItems, function (item) {
+                return item.qData.rank;
+            });
+            _.each(sortedData, function (item) {
+                sheets.push({
+                    value: item.qInfo.qId,
+                    label: item.qMeta.title
+                });
+            });
+            return defer.resolve(sheets);
+        });
+
+        return defer.promise;
+    };
+
     return {
         type: "items",
         component: "accordion",
@@ -109,10 +133,10 @@ define([], function () {
                         defaultValue: ""
                     },
                     columnSize: {
-                        type: "string",
+                        type: "number",
                         ref: "qDef.columnSize",
-                        label: "Column Size (px & %)",
-                        defaultValue: ""
+                        label: "Column Size",
+                        defaultValue: 0
                     }
                 }
             },
@@ -247,16 +271,16 @@ define([], function () {
                                 defaultValue: true
                             },
                             chartHeight: {
-                                type: "number",
+                                type: "string",
                                 ref: "props.chartHeight",
                                 label: "Chart Height",
-                                defaultValue: 40
+                                defaultValue: 100
                             },
                             chartWidth: {
-                                type: "number",
+                                type: "string",
                                 ref: "props.chartWidth",
                                 label: "Chart Width",
-                                defaultValue: 150
+                                defaultValue: 100
                             },
                             columnOrder: {
                                 type: "string",
@@ -273,7 +297,24 @@ define([], function () {
                                 type: "string",
                                 ref: "props.urlIframe",
                                 label: "URL iFrame"
-                            }
+                            },
+                            selectedSheet: {
+                                type: "string",
+                                component: "dropdown",
+                                label: "Select Sheet",
+                                ref: "props.selectedSheet",
+                                options: function () {
+                                    return getSheetList().then(function (items) {
+                                        return items;
+                                    });
+                                }
+                            },
+                            chartfield: {
+                                type: "string",
+                                ref: "props.chartfield",
+                                label: "Chart Field",
+                                expression: "optional"
+                            },
                         }
                     }
                 }

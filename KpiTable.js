@@ -131,9 +131,11 @@ define([
 
             $scope.GoUrl = function (id) {
                 if (id.length > 0) {
+                    app.field($scope.layout.props.chartfield).selectMatch(id, !1);
+                    qlik.navigation.gotoSheet($scope.layout.props.selectedSheet);
                     //var win = window.open($scope.layout.props.urlChart + id, '_blank');
                     //win.focus();
-                    window.location.href = $scope.layout.props.urlChart + id;
+                    //window.location.href = $scope.layout.props.urlChart + id;
                 }
             };
 
@@ -307,7 +309,7 @@ define([
                                     data: dataAux,
                                     label: value.name,
                                     borderColor: "#3e95cd",
-                                    borderWidth: 3,
+                                    borderWidth: 2,
                                     fill: false
                                 }]
                             },
@@ -328,10 +330,10 @@ define([
                                 },
                                 layout: {
                                     padding: {
-                                        left: 3,
-                                        right: 3,
-                                        top: 2,
-                                        bottom: 2
+                                        left: 4,
+                                        right: 4,
+                                        top: 4,
+                                        bottom: 4
                                     }
                                 },
                                 responsive: false,
