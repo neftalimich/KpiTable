@@ -71,9 +71,9 @@ define([
                         defaultValue: false
                     },
                     columnSize: {
-                        type: "number",
+                        type: "string",
                         ref: "qDef.columnSize",
-                        label: "Column Size",
+                        label: "Column Size (px & %)",
                         defaultValue: ""
                     }
                 }
@@ -271,16 +271,16 @@ define([
                                 defaultValue: true
                             },
                             chartHeight: {
-                                type: "string",
+                                type: "number",
                                 ref: "props.chartHeight",
                                 label: "Chart Height",
-                                defaultValue: 100
+                                defaultValue: 40
                             },
                             chartWidth: {
-                                type: "string",
+                                type: "number",
                                 ref: "props.chartWidth",
                                 label: "Chart Width",
-                                defaultValue: 100
+                                defaultValue: 150
                             },
                             columnOrder: {
                                 type: "string",
@@ -314,7 +314,7 @@ define([
                                 ref: "props.chartfield",
                                 label: "Chart Field",
                                 expression: "optional"
-                            },
+                            }
                         }
                     }
                 }
