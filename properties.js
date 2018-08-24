@@ -109,10 +109,10 @@ define([], function () {
                         defaultValue: ""
                     },
                     columnSize: {
-                        type: "number",
+                        type: "string",
                         ref: "qDef.columnSize",
-                        label: "Column Size",
-                        defaultValue: 0
+                        label: "Column Size (px & %)",
+                        defaultValue: ""
                     }
                 }
             },

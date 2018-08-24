@@ -7,7 +7,7 @@
                     ng-show="($index > 1 || ($index > 0 && !cubeIsGrouped)) && !columnConfiguration[$index].isSubtitle"
                     ng-click="head.orderBy()"
                     class="{{columnConfiguration[$index].textAlign}}"
-                    ng-style="columnConfiguration[$index].columnSize>0 && {'width':columnConfiguration[$index].columnSize+'px'}">
+                    ng-style="columnConfiguration[$index].columnSize!='' && {'width':columnConfiguration[$index].columnSize}">
                     {{ table.headers[layout.qHyperCube.qColumnOrder[$index]].qFallbackTitle}}
                 </th>
                 <th ng-show="layout.props.showChart" class="text-center">
@@ -17,7 +17,7 @@
         </thead>
         <tbody>
             <tr ng-repeat-start="group in cubeGrouped track by $index" ng-init="$groupIndex = $index" ng-click="table.rows[group.data[0]].cells[1].select($event)">
-                <td colspan="2" ng-show="group.category != ''">
+                <td colspan="2" ng-show="group.category != ''" class="bg-white">
                     <span class="text-group">{{group.category}}</span>
                 </td>
             </tr>
@@ -57,7 +57,7 @@
                 </td>
                 <td ng-show="layout.props.showChart" class="text-center">
                     <canvas id="{{ 'chart-' + table.rows[rowIndexAux].cells[0].qText }}" 
-                            ng-style="{'height':layout.props.chartHeight,'width':layout.props.chartWidth+'px'}"
+                            ng-style="{'height':layout.props.chartHeight,'width':layout.props.chartWidth}"
                             class="chart"
                             ng-click="GoUrl(table.rows[rowIndexAux].cells[0].qText)"></canvas>
                 </td>

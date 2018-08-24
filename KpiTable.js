@@ -307,13 +307,13 @@ define([
                                     data: dataAux,
                                     label: value.name,
                                     borderColor: "#3e95cd",
+                                    borderWidth: 3,
                                     fill: false
                                 }]
                             },
                             options: {
                                 legend: { display: false },
                                 title: { display: false },
-                                borderWidth: 1,
                                 elements: {
                                     point: { radius: 3 },
                                     pointHoverRadius: { radius: 4 }
@@ -328,13 +328,14 @@ define([
                                 },
                                 layout: {
                                     padding: {
-                                        left: 5,
-                                        right: 5,
-                                        top: 0,
-                                        bottom: 0
+                                        left: 3,
+                                        right: 3,
+                                        top: 2,
+                                        bottom: 2
                                     }
                                 },
                                 responsive: false,
+                                maintainAspectRatio: false,
                                 tooltips: {
                                     enabled: false,
                                     displayColors: false,
