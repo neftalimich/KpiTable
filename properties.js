@@ -288,15 +288,11 @@ define([
                                 label: "Column Order",
                                 defaultValue: "0,1,2"
                             },
-                            url1: {
-                                type: "string",
-                                ref: "props.urlChart",
-                                label: "URL Chart"
-                            },
                             url2: {
                                 type: "string",
                                 ref: "props.urlIframe",
-                                label: "URL iFrame"
+                                label: "URL iFrame",
+                                expression: "optional"
                             },
                             selectedSheet: {
                                 type: "string",

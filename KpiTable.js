@@ -10,6 +10,7 @@ define([
     'use strict';
     $("<style>").html(cssContent).appendTo("head");
     $('<link rel="stylesheet" type="text/css" href="/extensions/KpiTable/css/font-awesome.css">').html("").appendTo("head");
+    var app = qlik.currApp();
 
     return {
         template: template,
@@ -139,11 +140,13 @@ define([
                 }
             };
 
+            $scope.origin = document.location.origin;
+
             $scope.sFrame = false;
             $scope.ShowFrame = function (id) {
                 //console.log("id: ",  $scope.layout.props.urlIframe, id);
                 $scope.sFrame = true;
-                $scope.idk = $scope.layout.props.urlIframe + id;
+                $scope.idk = $scope.origin + $scope.layout.props.urlIframe + id;
             };
 
 

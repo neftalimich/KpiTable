@@ -16,7 +16,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat-start="group in cubeGrouped track by $index" ng-init="$groupIndex = $index" ng-click="table.rows[group.data[0]].cells[1].select($event)">
+            <tr ng-repeat-start="group in cubeGrouped track by $index" ng-init="$groupIndex = $index">
                 <td colspan="2" ng-show="group.category != ''" class="bg-white">
                     <span class="text-group">{{group.category}}</span>
                 </td>
@@ -36,7 +36,7 @@
                     </span><!-- Arrow End -->
                     <span ng-show="!columnConfiguration[$index].isArrow">
                         <!-- Cell -->
-                        <span ng-click="cell.select($event)">
+                        <span>
                             <span class="{{columnConfiguration[$index].textClass}}" ng-show="!columnConfiguration[$index].isIconClass">
                                 {{cell.qText}}
                             </span>
