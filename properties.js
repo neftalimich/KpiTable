@@ -1,7 +1,7 @@
 define([
     "qlik",
     'ng!$q'
-], function (qlik,$q) {
+], function (qlik, $q) {
     "use strict";
 
     var app = qlik.currApp();
@@ -281,6 +281,12 @@ define([
                                 ref: "props.chartWidth",
                                 label: "Chart Width",
                                 defaultValue: 150
+                            },
+                            chartLineColor: {
+                                type: "string",
+                                ref: "props.chartLineColor",
+                                label: "Chart Line Color",
+                                defaultValue: "#3e95cd"
                             },
                             columnOrder: {
                                 type: "string",

@@ -248,6 +248,11 @@ define([
                     $scope.LoadCharts();
                 });
             });
+            $scope.$watchCollection("layout.props.chartLineColor", function (newVal) {
+                angular.element(document).ready(function () {
+                    $scope.LoadCharts();
+                });
+            });
             // --------------------------- CHART
             angular.element(document).ready(function () {
                 $scope.GroupDataChart();
@@ -284,44 +289,55 @@ define([
             $scope.LoadCharts = function () {
                 //console.log("charts",charts);
                 //console.log("dataGrouped", $scope.dataGrouped);
+                let dimLength = $scope.layout.cube2.qHyperCube.qDimensionInfo.length;
+                let meaLength = $scope.layout.cube2.qHyperCube.qMeasureInfo.length;
+
                 angular.forEach($scope.dataGrouped, function (value, key) {
                     let ctx = $("#chart-" + value.name);
                     if (ctx.length) {
                         //console.log("ctx", ctx);
+                        let datasetAux = [];
                         let dataAux = [];
                         let labelsAux = [];
 
+                        datasetAux.push({
+                            data: [],
+                            pointBackgroundColor: [],
+                            pointBorderColor: [],
+                            borderWidth: 1,
+                            label: value.name,
+                            borderColor: $scope.layout.props.chartLineColor ? $scope.layout.props.chartLineColor : "#3e95cd",
+                            fill: false
+                        });
+
                         if (charts[key] != undefined || charts[key] != null) {
-                            //console.log("Exist-charts[key]", charts[key]);
-                            dataAux = charts[key].config.data.datasets[0].data;
-                            labelsAux = charts[key].config.data.labels;
                             charts[key].destroy();
                             chart[key] = {};
-                        } else {
-                            for (let i = 0; i < value.data.length; i++) {
-                                dataAux.push(parseFloat(value.data[i][2].qText));
-                                labelsAux.push(value.data[i][1].qText);
+                        }
+
+                        for (let i = 0; i < value.data.length; i++) {
+                            datasetAux[0].data.push(parseFloat(value.data[i][dimLength].qText));
+                            if (meaLength > 1) {
+                                datasetAux[0].pointBackgroundColor.push(value.data[i][dimLength + 1].qText);
+                                if (meaLength > 2) {
+                                    datasetAux[0].pointBorderColor.push(value.data[i][dimLength + 2].qText);
+                                }
                             }
+                            labelsAux.push(value.data[i][1].qText);
                         }
 
                         let myLineChart = new Chart(ctx, {
                             type: 'line',
                             data: {
                                 labels: labelsAux,
-                                datasets: [{
-                                    data: dataAux,
-                                    label: value.name,
-                                    borderColor: "#3e95cd",
-                                    borderWidth: 2,
-                                    fill: false
-                                }]
+                                datasets: datasetAux
                             },
                             options: {
                                 legend: { display: false },
                                 title: { display: false },
                                 elements: {
-                                    point: { radius: 3 },
-                                    pointHoverRadius: { radius: 4 }
+                                    point: { radius: 1 },
+                                    pointHoverRadius: { radius: 2 }
                                 },
                                 scales: {
                                     xAxes: [{
@@ -339,7 +355,7 @@ define([
                                         bottom: 4
                                     }
                                 },
-                                responsive: false,
+                                responsive: true,
                                 maintainAspectRatio: false,
                                 tooltips: {
                                     enabled: false,

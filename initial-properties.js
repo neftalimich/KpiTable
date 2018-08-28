@@ -14,7 +14,7 @@ define([], function () {
                 qInitialDataFetch: [
                     {
                         qHeight: 2000,
-                        qWidth: 3
+                        qWidth: 5
                     }
                 ],
                 qDimensions: [],

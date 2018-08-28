@@ -8,6 +8,14 @@
     color: gray;
 }
 
+.qv-object-KpiTable .text-darkgray {
+    color: darkgray;
+}
+
+.qv-object-KpiTable .text-dimgray {
+    color: dimgray;
+}
+
 .qv-object-KpiTable .text-dodgerblue {
     color: dodgerblue;
 }

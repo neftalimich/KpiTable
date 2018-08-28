@@ -49,17 +49,20 @@
                         <!-- Subtitle -->
                         <span ng-show="$index==2">
                             <br />
-                            <span ng-repeat="subtitle in table.rows[rowIndexAux].cells" ng-show="columnConfiguration[$index].isSubtitle" class="text-subtitle">
+                            <span ng-repeat="subtitle in table.rows[rowIndexAux].cells" 
+                                  class="{{columnConfiguration[$index].textClass}} text-subtitle"
+                                  ng-show="columnConfiguration[$index].isSubtitle">
                                 {{subtitle.qText}}
                             </span>
                         </span><!-- Subtitle End -->
                     </span>
                 </td>
                 <td ng-show="layout.props.showChart" class="text-center">
-                    <canvas id="{{ 'chart-' + table.rows[rowIndexAux].cells[0].qText }}" 
-                            ng-style="{'height':layout.props.chartHeight,'width':layout.props.chartWidth}"
-                            class="chart"
-                            ng-click="GoUrl(table.rows[rowIndexAux].cells[0].qText)"></canvas>
+                    <div ng-style="{'height':layout.props.chartHeight,'width':layout.props.chartWidth}" style="margin:auto">
+                        <canvas id="{{ 'chart-' + table.rows[rowIndexAux].cells[0].qText }}"
+                                class="chart"
+                                ng-click="GoUrl(table.rows[rowIndexAux].cells[0].qText)"></canvas>
+                    </div>
                 </td>
             </tr>
             <tr ng-repeat-end></tr>
