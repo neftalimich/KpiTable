@@ -249,7 +249,12 @@ define([
                     $scope.LoadCharts();
                 });
             });
-            $scope.$watchCollection("layout.props.chartLineColor", function (newVal) {
+            $scope.$watchCollection("layout.props.chartLineWidth", function (newVal) {
+                angular.element(document).ready(function () {
+                    $scope.LoadCharts();
+                });
+            });
+            $scope.$watchCollection("layout.props.chartPointRadius", function (newVal) {
                 angular.element(document).ready(function () {
                     $scope.LoadCharts();
                 });
@@ -287,34 +292,35 @@ define([
                 }
             };
             var charts = [];
+            var canvas = [];
+            $scope.ClearCharts = function () {
+                angular.forEach(charts, function (chart, key) {
+                    let ctx = canvas[key][0].getContext('2d');
+                    ctx.clearRect(0, 0, 0, 0);
+                    chart.destroy();
+                });
+            };
             $scope.LoadCharts = function () {
-                //console.log("charts",charts);
+                $scope.ClearCharts();
                 //console.log("dataGrouped", $scope.dataGrouped);
                 let dimLength = $scope.layout.cube2.qHyperCube.qDimensionInfo.length;
                 let meaLength = $scope.layout.cube2.qHyperCube.qMeasureInfo.length;
 
                 angular.forEach($scope.dataGrouped, function (value, key) {
-                    let ctx = $("#chart-" + value.name);
-                    if (ctx.length) {
-                        //console.log("ctx", ctx);
+                    let canva = $("#chart-" + value.name);
+                    if (canva.length) {
                         let datasetAux = [];
-                        let dataAux = [];
                         let labelsAux = [];
 
                         datasetAux.push({
                             data: [],
                             pointBackgroundColor: [],
                             pointBorderColor: [],
-                            borderWidth: 1,
+                            borderWidth: $scope.layout.props.chartLineWidth,
                             label: value.name,
                             borderColor: $scope.layout.props.chartLineColor ? $scope.layout.props.chartLineColor : "#3e95cd",
                             fill: false
                         });
-
-                        if (charts[key] != undefined || charts[key] != null) {
-                            charts[key].destroy();
-                            chart[key] = {};
-                        }
 
                         for (let i = 0; i < value.data.length; i++) {
                             datasetAux[0].data.push(parseFloat(value.data[i][dimLength].qText));
@@ -327,7 +333,7 @@ define([
                             labelsAux.push(value.data[i][1].qText);
                         }
 
-                        let myLineChart = new Chart(ctx, {
+                        let myLineChart = new Chart(canva, {
                             type: 'line',
                             data: {
                                 labels: labelsAux,
@@ -337,8 +343,10 @@ define([
                                 legend: { display: false },
                                 title: { display: false },
                                 elements: {
-                                    point: { radius: 1 },
-                                    pointHoverRadius: { radius: 2 }
+                                    point: {
+                                        radius: $scope.layout.props.chartPointRadius,
+                                        hoverRadius: $scope.layout.props.chartPointHoverRadius
+                                    }
                                 },
                                 scales: {
                                     xAxes: [{
@@ -368,9 +376,11 @@ define([
                                 }
                             }
                         });
+
                         charts[key] = charts[key] || [];
                         charts[key] = myLineChart;
-                        //console.log("New-charts[key]", charts[key]);
+                        canvas[key] = canvas[key] || [];
+                        canvas[key] = canva;
                     }
                 });
             };

@@ -218,15 +218,39 @@ define([
             settings: {
                 uses: "settings",
                 items: {
-                    initFetchRows: {
-                        ref: "qHyperCubeDef.qInitialDataFetch.0.qHeight",
-                        label: "Initial fetch rows",
-                        type: "number",
-                        defaultValue: 50
+                    initFetch: {
+                        type: "items",
+                        label: "Intial Fetch",
+                        items: {
+                            initFetchRows: {
+                                ref: "qHyperCubeDef.qInitialDataFetch.0.qHeight",
+                                label: "Cube 1 - Initial fetch rows",
+                                type: "number",
+                                defaultValue: 50
+                            },
+                            initFetchCols: {
+                                ref: "qHyperCubeDef.qInitialDataFetch.0.qWidth",
+                                label: "Cube 1 - Initial fetch cols",
+                                type: "number",
+                                defaultValue: 15
+                            },
+                            initFetchRows2: {
+                                ref: "cube2.qHyperCubeDef.qInitialDataFetch.0.qHeight",
+                                label: "Cube 2 -Initial fetch rows",
+                                type: "number",
+                                defaultValue: 2000
+                            },
+                            initFetchCols2: {
+                                ref: "cube2.qHyperCubeDef.qInitialDataFetch.0.qWidth",
+                                label: "Cube 2 - Initial fetch cols",
+                                type: "number",
+                                defaultValue: 5
+                            }
+                        }
                     },
                     General: {
                         type: "items",
-                        label: "Configuration",
+                        label: "Table Configuration",
                         items: {
                             categorize: {
                                 type: "boolean",
@@ -256,6 +280,41 @@ define([
                                 }],
                                 defaultValue: true
                             },
+                            columnOrder: {
+                                type: "string",
+                                ref: "props.columnOrder",
+                                label: "Column Order",
+                                defaultValue: "0,1,2"
+                            },
+                            url2: {
+                                type: "string",
+                                ref: "props.urlIframe",
+                                label: "URL iFrame",
+                                expression: "optional"
+                            },
+                            selectedSheet: {
+                                type: "string",
+                                component: "dropdown",
+                                label: "Select Sheet",
+                                ref: "props.selectedSheet",
+                                options: function () {
+                                    return getSheetList().then(function (items) {
+                                        return items;
+                                    });
+                                }
+                            },
+                            chartfield: {
+                                type: "string",
+                                ref: "props.chartfield",
+                                label: "Chart Field",
+                                expression: "optional"
+                            }
+                        }
+                    },
+                    Chart: {
+                        type: "items",
+                        label: "Chart Configuration",
+                        items: {
                             showChart: {
                                 type: "boolean",
                                 component: "switch",
@@ -288,34 +347,23 @@ define([
                                 label: "Chart Line Color",
                                 defaultValue: "#3e95cd"
                             },
-                            columnOrder: {
-                                type: "string",
-                                ref: "props.columnOrder",
-                                label: "Column Order",
-                                defaultValue: "0,1,2"
+                            chartLineWidth: {
+                                type: "number",
+                                ref: "props.chartLineWidth",
+                                label: "Chart Line Border Width",
+                                defaultValue: 1
                             },
-                            url2: {
-                                type: "string",
-                                ref: "props.urlIframe",
-                                label: "URL iFrame",
-                                expression: "optional"
+                            chartPointRadius: {
+                                type: "number",
+                                ref: "props.chartPointRadius",
+                                label: "Chart Point Radius",
+                                defaultValue: 2
                             },
-                            selectedSheet: {
-                                type: "string",
-                                component: "dropdown",
-                                label: "Select Sheet",
-                                ref: "props.selectedSheet",
-                                options: function () {
-                                    return getSheetList().then(function (items) {
-                                        return items;
-                                    });
-                                }
-                            },
-                            chartfield: {
-                                type: "string",
-                                ref: "props.chartfield",
-                                label: "Chart Field",
-                                expression: "optional"
+                            chartPointHoverRadius: {
+                                type: "number",
+                                ref: "props.chartPointHoverRadius",
+                                label: "Chart Point Hover Radius",
+                                defaultValue: 2
                             }
                         }
                     }

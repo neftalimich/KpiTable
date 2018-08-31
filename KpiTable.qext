@@ -1,15 +1,15 @@
 {
-	"name": "KPITable",
-	"description": "Table visualization template based on angular.js",
-	"icon": "table",
-	"type": "visualization",
-	"version": "0.2.0.6",
-	"author": "Neftalí Michelet",
-	"homepage": "",
-	"keywords": "qlik-sense, visualization",
-	"license": "",
-	"repository": "",
-	"dependencies": {
-		"qlik-sense": ">=3.0.x"
-	}
+  "name": "KPITable",
+  "description": "Table + mini chart",
+  "icon": "table",
+  "type": "visualization",
+  "version": "0.2.1.0",
+  "author": "Neftalí Michelet",
+  "homepage": "",
+  "keywords": "qlik-sense, visualization",
+  "license": "",
+  "repository": "",
+  "dependencies": {
+    "qlik-sense": ">=3.0.x"
+  }
 }

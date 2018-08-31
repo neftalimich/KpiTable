@@ -92,10 +92,6 @@
     background-color: white !important;
 }
 
-.qv-object-KpiTable .chart {
-    margin: auto;
-}
-
 .qv-object-KpiTable .iFrame-Container {
     position: absolute;
     border: none;
@@ -153,4 +149,3 @@
     .qv-object-KpiTable .table-formated > tbody > tr:nth-child(even) {
         background-color: #f2f2f2;
     }
-
