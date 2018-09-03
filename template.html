@@ -3,6 +3,7 @@
         <thead>
             <tr>
                 <th ng-show="cubeIsGrouped" ng-click="table.headers[1].orderBy()"></th>
+                <th ng-show="layout.props.showRowIndex"></th>
                 <th ng-repeat="head in table.headers track by $index"
                     ng-show="($index > 1 || ($index > 0 && !cubeIsGrouped)) && !columnConfiguration[$index].isSubtitle"
                     ng-click="head.orderBy()"
@@ -18,13 +19,16 @@
         </thead>
         <tbody>
             <tr ng-repeat-start="group in cubeGrouped track by $index" ng-init="$groupIndex = $index">
-                <td colspan="2" ng-show="group.category != ''" class="bg-white">
+                <td colspan="3" ng-show="group.category != ''" class="bg-white">
                     <span class="text-group">{{group.category}}</span>
                 </td>
             </tr>
             <tr ng-repeat="rowIndexAux in group.data track by $index" ng-init="$rowIndex = $index">
-                <td rowspan="{{group.data.length}}" ng-show="$rowIndex == 0 && group.category != ''" class="text-center bg-white" style="max-width:20px !important;">
+                <td rowspan="{{group.data.length}}" ng-show="$rowIndex == 0 && group.category != ''" class="text-center bg-white" style="max-width:25px !important;">
                     <div class="index-group" ng-show="layout.props.showGroupIndex">{{$groupIndex+1}}</div>
+                </td>
+                <td class="text-center" ng-show="layout.props.showRowIndex">
+                    <div class="index-row">{{$rowIndex+1}}</div>
                 </td>
                 <td ng-repeat="cell in table.rows[rowIndexAux].cells track by $index"
                     ng-show="($index > 1 || ($index > 0 && !cubeIsGrouped)) && !columnConfiguration[$index].isSubtitle"

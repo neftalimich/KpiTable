@@ -280,6 +280,20 @@ define([
                                 }],
                                 defaultValue: true
                             },
+                            showRowIndex: {
+                                type: "boolean",
+                                component: "switch",
+                                ref: "props.showRowIndex",
+                                label: "Show Row Index",
+                                options: [{
+                                    value: true,
+                                    label: "Yes"
+                                }, {
+                                    value: false,
+                                    label: "No"
+                                }],
+                                defaultValue: false
+                            },
                             columnOrder: {
                                 type: "string",
                                 ref: "props.columnOrder",
