@@ -5,8 +5,8 @@ define([], function () {
             qDimensions: [],
             qMeasures: [],
             qInitialDataFetch: [{
-                qWidth: 15,
-                qHeight: 20
+                qWidth: 20,
+                qHeight: 50
             }]
         },
         cube2: {

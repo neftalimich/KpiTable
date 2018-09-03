@@ -308,6 +308,18 @@ define([
                                 ref: "props.chartfield",
                                 label: "Chart Field",
                                 expression: "optional"
+                            },
+                            tableHeaderSize: {
+                                type: "string",
+                                ref: "props.headerSize",
+                                label: "Header size",
+                                defaultValue: "1vw"
+                            },
+                            tableTextSize: {
+                                type: "string",
+                                ref: "props.textSize",
+                                label: "Text size",
+                                defaultValue: "1vw"
                             }
                         }
                     },

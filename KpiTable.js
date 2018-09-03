@@ -31,7 +31,7 @@ define([
             return qlik.Promise.resolve();
         },
         controller: ['$scope', function ($scope) {
-            console.log("layout", $scope.layout);
+            console.log("KpiTable - layout", $scope.layout);
 
             $scope.$watchCollection("layout.qHyperCube.qDataPages", function (newValue) {
                 $scope.ReloadCube();
@@ -58,7 +58,14 @@ define([
                 $scope.cubeGrouped = [];
                 if ($scope.layout.qHyperCube.qDataPages[0].qMatrix[0].length > 2) {
                     if ($scope.layout.props.categorize) { // IsCategory
-                        let qMatrixCopy = JSON.parse(JSON.stringify($scope.layout.qHyperCube.qDataPages[0].qMatrix));
+                        let qMatrixCopy = []; //JSON.parse(JSON.stringify($scope.layout.qHyperCube.qDataPages[0].qMatrix));
+
+                        angular.forEach($scope.layout.qHyperCube.qDataPages, function (qDataPage, key) {
+                            qMatrixCopy.push.apply(qMatrixCopy, JSON.parse(JSON.stringify(qDataPage.qMatrix)));
+                        });
+
+                        //console.log("qMatrixCopy", qMatrixCopy);
+
                         let categories = qMatrixCopy.reduce(function (obj, item, index) {
                             obj[item[1].qText] = obj[item[1].qText] || [];
                             obj[item[1].qText].push(index);
@@ -72,7 +79,11 @@ define([
                     } else {
                         $scope.cubeIsGrouped = false;
                         $scope.cubeGrouped.push({ category: "", data: [] });
-                        for (let i = 0; i < $scope.layout.qHyperCube.qDataPages[0].qMatrix.length; i++) {
+                        let qMatrixCopy = [];
+                        angular.forEach($scope.layout.qHyperCube.qDataPages, function (qDataPage, key) {
+                            qMatrixCopy.push.apply(qMatrixCopy, JSON.parse(JSON.stringify(qDataPage.qMatrix)));
+                        });
+                        for (let i = 0; i < qMatrixCopy.length; i++) {
                             $scope.cubeGrouped[0].data.push(i);
                         }
                     }
@@ -164,7 +175,7 @@ define([
                         }
                     ]
                 },
-                qNullSuppression: false
+                qNullSuppression: true
             };
             var qMeasureTemplate = {
                 qDef: {
@@ -239,12 +250,12 @@ define([
             });
             $scope.$watchCollection("layout.qHyperCube.qDataPages", function (newVal) {
                 angular.element(document).ready(function () {
-                    $scope.GroupDataChart();
                     $scope.LoadCharts();
                 });
             });
             $scope.$watchCollection("layout.cube2.qHyperCube.qDataPages", function (newVal) {
                 angular.element(document).ready(function () {
+                    $scope.qDataPagesCube2[0] = JSON.parse(JSON.stringify($scope.layout.cube2.qHyperCube.qDataPages[0]));
                     $scope.GroupDataChart();
                     $scope.LoadCharts();
                 });
@@ -259,16 +270,55 @@ define([
                     $scope.LoadCharts();
                 });
             });
+            // --------------------------- More Data
+
+            $scope.GetMoreData = function () {
+                $scope.ReloadCube();
+                $scope.NextPageCube2();
+                return true;
+            };
+
             // --------------------------- CHART
             angular.element(document).ready(function () {
+                if ($scope.qDataPagesCube2.length == 0) {
+                    $scope.qDataPagesCube2.push(JSON.parse(JSON.stringify($scope.layout.cube2.qHyperCube.qDataPages[0])));
+                }
                 $scope.GroupDataChart();
                 $scope.LoadCharts();
             });
 
+            $scope.currentPage = 1;
+            $scope.qDataPagesCube2 = [];
+            $scope.NextPageCube2 = function () {
+                let requestPage = [{
+                    qTop: $scope.layout.cube2.qHyperCube.qDataPages[0].qArea.qHeight * $scope.currentPage,
+                    qLeft: 0,
+                    qWidth: $scope.layout.cube2.qHyperCube.qDataPages[0].qArea.qWidth,
+                    qHeight: $scope.layout.cube2.qHyperCube.qDataPages[0].qArea.qHeight
+                }];
+
+                $scope.ext.model.getHyperCubeData('/cube2/qHyperCubeDef', requestPage).then(function (value) {
+                    //console.log("page " + $scope.currentPage, value[0]);
+                    if ($scope.qDataPagesCube2.length == $scope.currentPage) {
+                        $scope.qDataPagesCube2.push(value[0]);
+                    } else {
+                        $scope.qDataPagesCube2[$scope.currentPage] = value[0];
+                    }
+                    $scope.currentPage += 1;
+                    $scope.GroupDataChart();
+                    $scope.LoadCharts();
+                });
+            };
+
             $scope.GroupDataChart = function () {
+                //console.log("Cube2 - qDataPages", $scope.qDataPagesCube2);
                 if ($scope.layout.cube2.qHyperCube.qDimensionInfo.length > 0) {
-                    var qMatrixCopy = JSON.parse(JSON.stringify($scope.layout.cube2.qHyperCube.qDataPages[0].qMatrix));
-                    if (qMatrixCopy[0].length > 2) {
+                    if ($scope.qDataPagesCube2[0].qMatrix[0].length > 2) {
+                        let qMatrixCopy = [];
+                        angular.forEach($scope.qDataPagesCube2, function (qDataPage, key) {
+                            qMatrixCopy.push.apply(qMatrixCopy, JSON.parse(JSON.stringify(qDataPage.qMatrix)));
+                        });
+                        //console.log(qMatrixCopy);
                         var groups = qMatrixCopy.reduce(function (obj, item) {
                             obj[item[0].qText] = obj[item[0].qText] || [];
                             obj[item[0].qText].push(item);

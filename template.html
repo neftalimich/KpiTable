@@ -7,7 +7,8 @@
                     ng-show="($index > 1 || ($index > 0 && !cubeIsGrouped)) && !columnConfiguration[$index].isSubtitle"
                     ng-click="head.orderBy()"
                     class="{{columnConfiguration[$index].textAlign}}"
-                    ng-style="columnConfiguration[$index].columnSize!='' && {'width':columnConfiguration[$index].columnSize}">
+                    ng-style="columnConfiguration[$index].columnSize!='' && {'width':columnConfiguration[$index].columnSize}"
+                    style="font-size: {{layout.props.headerSize}}">
                     {{ table.headers[layout.qHyperCube.qColumnOrder[$index]].qFallbackTitle}}
                 </th>
                 <th ng-show="layout.props.showChart" class="text-center">
@@ -22,7 +23,7 @@
                 </td>
             </tr>
             <tr ng-repeat="rowIndexAux in group.data track by $index" ng-init="$rowIndex = $index">
-                <td rowspan="{{group.data.length}}" ng-show="$rowIndex == 0 && group.category != ''" class="text-center bg-white">
+                <td rowspan="{{group.data.length}}" ng-show="$rowIndex == 0 && group.category != ''" class="text-center bg-white" style="max-width:20px !important;">
                     <div class="index-group" ng-show="layout.props.showGroupIndex">{{$groupIndex+1}}</div>
                 </td>
                 <td ng-repeat="cell in table.rows[rowIndexAux].cells track by $index"
@@ -38,7 +39,7 @@
                         <!-- Cell -->
                         <span>
                             <span class="{{columnConfiguration[$index].textClass}}" ng-show="!columnConfiguration[$index].isIconClass">
-                                <span ng-click="$index == 2 && GoUrl(table.rows[rowIndexAux].cells[0].qText)">
+                                <span ng-click="$index == 2 && GoUrl(table.rows[rowIndexAux].cells[0].qText)" style="font-size: {{layout.props.textSize}}">
                                     {{cell.qText}}
                                 </span>
                             </span>
@@ -69,9 +70,9 @@
             <tr ng-repeat-end></tr>
         </tbody>
     </table>
-    <button ng-if="table.rowCount>table.rows.length" ng-click="table.getMoreData()" class="lui-button more">More...</button>
+    <button ng-if="table.rowCount>table.rows.length" ng-click="table.getMoreData() && GetMoreData()" class="lui-button more">More...</button>
     <!-- iFrame -->
-    <div ng-show="sFrame" style="position:absolute;border:none;width:80%;height:100%;top:0;left:50%;">
+    <div ng-show="sFrame" style="position:absolute;border:none;width:99%;height:95%;top:0;left:50%;">
         <div style="position:relative;left:-50%;width:100%;height:100%;">
             <button class="lui-button lui-button--success" ng-click="sFrame=false">
                 <i class="lui-icon lui-icon--close"></i>
