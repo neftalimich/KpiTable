@@ -73,18 +73,29 @@ define([
                         }, {});
                         //console.log("categories", categories);
                         $scope.cubeIsGrouped = true;
+
                         $scope.cubeGrouped = Object.keys(categories).map(function (key) {
-                            return { category: key, data: categories[key] };
+                            return { category: key, data: categories[key], idx: [] };
                         });
+                        // ---------------- Index
+                        let idxAux = 0;
+                        angular.forEach($scope.cubeGrouped, function (group, key) {
+                            angular.forEach(group.data, function (value, key) {
+                                group.idx.push(idxAux);
+                                idxAux += 1;
+                            });
+                        });
+                        // ---------------- Index END
                     } else {
                         $scope.cubeIsGrouped = false;
-                        $scope.cubeGrouped.push({ category: "", data: [] });
+                        $scope.cubeGrouped.push({ category: "", data: [], idx: [] });
                         let qMatrixCopy = [];
                         angular.forEach($scope.layout.qHyperCube.qDataPages, function (qDataPage, key) {
                             qMatrixCopy.push.apply(qMatrixCopy, JSON.parse(JSON.stringify(qDataPage.qMatrix)));
                         });
                         for (let i = 0; i < qMatrixCopy.length; i++) {
                             $scope.cubeGrouped[0].data.push(i);
+                            $scope.cubeGrouped[0].idx.push(i);
                         }
                     }
                     //console.log("cubeGrouped",$scope.cubeGrouped); //OSUSER()
@@ -408,10 +419,10 @@ define([
                                 },
                                 layout: {
                                     padding: {
-                                        left: 4,
-                                        right: 4,
-                                        top: 4,
-                                        bottom: 4
+                                        left: $scope.layout.props.chartPointRadius,
+                                        right: $scope.layout.props.chartPointRadius,
+                                        top: $scope.layout.props.chartPointRadius,
+                                        bottom: $scope.layout.props.chartPointRadius
                                     }
                                 },
                                 responsive: true,

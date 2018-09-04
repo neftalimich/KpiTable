@@ -28,7 +28,7 @@
                     <div class="index-group" ng-show="layout.props.showGroupIndex">{{$groupIndex+1}}</div>
                 </td>
                 <td class="text-center" ng-show="layout.props.showRowIndex">
-                    <div class="index-row">{{$rowIndex+1}}</div>
+                    <div class="index-row">{{group.idx[$rowIndex]+1}}</div>
                 </td>
                 <td ng-repeat="cell in table.rows[rowIndexAux].cells track by $index"
                     ng-show="($index > 1 || ($index > 0 && !cubeIsGrouped)) && !columnConfiguration[$index].isSubtitle"
