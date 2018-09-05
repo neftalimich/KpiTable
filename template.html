@@ -34,35 +34,41 @@
                     ng-show="($index > 1 || ($index > 0 && !cubeIsGrouped)) && !columnConfiguration[$index].isSubtitle"
                     class="selectable {{columnConfiguration[$index].textAlign}}"
                     ng-class="{'selected': cell.selected}">
-                    <!-- Arrow -->
-                    <span ng-show="columnConfiguration[$index].isArrow">
-                        <span ng-show="{{cell.qNum > 0}}" class="text-success"><i class="lui-icon lui-icon--triangle-top" style="font-size:25px;"></i></span>
-                        <span ng-show="{{cell.qNum < 0}}" class="text-danger"><i class="lui-icon lui-icon--triangle-bottom" style="font-size:25px;"></i></span>
-                    </span><!-- Arrow End -->
-                    <span ng-show="!columnConfiguration[$index].isArrow">
-                        <!-- Cell -->
-                        <span>
-                            <span class="{{columnConfiguration[$index].textClass}}" ng-show="!columnConfiguration[$index].isIconClass">
-                                <span ng-click="$index == 2 && GoUrl(table.rows[rowIndexAux].cells[0].qText)" style="font-size: {{layout.props.textSize}}">
-                                    {{cell.qText}}
-                                </span>
-                            </span>
-                            <span class="{{columnConfiguration[$index].textClass}}" ng-show="columnConfiguration[$index].isIconClass">
-                                <i class="{{cell.qText}}"></i>
-                            </span>
-                        </span><!-- Cell End -->
-                        <i class="{{columnConfiguration[$index].iconClass}}"></i>
-                        <i class="lui-icon lui-icon--help text-info" ng-click="ShowFrame(table.rows[rowIndexAux].cells[0].qText)" ng-show="columnConfiguration[$index].showHelpIcon"></i>
-                        <!-- Subtitle -->
-                        <span ng-show="$index==2">
-                            <br />
-                            <span ng-repeat="subtitle in table.rows[rowIndexAux].cells"
-                                  class="{{columnConfiguration[$index].textClass}} text-subtitle"
-                                  ng-show="columnConfiguration[$index].isSubtitle">
+
+                    <!-- Cell -->
+                    <span class="{{columnConfiguration[$index].textClass}}">
+                        <span ng-show="columnConfiguration[$index].type==0 || columnConfiguration[$index].type==null"
+                              ng-click="$index == 2 && GoUrl(table.rows[rowIndexAux].cells[0].qText)"
+                              style="font-size: {{layout.props.textSize}}">
+                            {{cell.qText}}
+                        </span>
+                        <span ng-show="columnConfiguration[$index].type==1"
+                              ng-bind-html="cell.qText">
+                        </span>
+                        <span ng-show="columnConfiguration[$index].type==2">
+                            <i class="{{cell.qText}}"></i>
+                        </span>
+                    </span><!-- Cell End -->
+
+                    <i class="{{columnConfiguration[$index].iconClass}}"></i>
+                    <i class="lui-icon lui-icon--help text-info" ng-click="ShowFrame(table.rows[rowIndexAux].cells[0].qText)" ng-show="columnConfiguration[$index].showHelpIcon"></i>
+                    <!-- Subtitle -->
+                    <span ng-show="$index==2">
+                        <br />
+                        <span ng-repeat="subtitle in table.rows[rowIndexAux].cells"
+                              class="{{columnConfiguration[$index].textClass}} text-subtitle"
+                              ng-show="columnConfiguration[$index].isSubtitle">
+                            <span ng-show="columnConfiguration[$index].type==0 || columnConfiguration[$index].type==null">
                                 {{subtitle.qText}}
                             </span>
-                        </span><!-- Subtitle End -->
-                    </span>
+                            <span ng-show="columnConfiguration[$index].type==1"
+                                  ng-bind-html="cell.qText">
+                            </span>
+                            <span ng-show="columnConfiguration[$index].type==2">
+                                <i class="{{cell.qText}}"></i>
+                            </span>
+                        </span>
+                    </span><!-- Subtitle End -->
                 </td>
                 <td ng-show="layout.props.showChart" class="text-center">
                     <div ng-style="{'height':layout.props.chartHeight,'width':layout.props.chartWidth}" style="margin:auto">

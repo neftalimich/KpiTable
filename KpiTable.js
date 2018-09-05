@@ -129,10 +129,9 @@ define([
                             textClass: $scope.layout.qHyperCube.qDimensionInfo[indexAux].textClass,
                             isSubtitle: $scope.layout.qHyperCube.qDimensionInfo[indexAux].isSubtitle,
                             textAlign: $scope.layout.qHyperCube.qDimensionInfo[indexAux].textAlign,
-                            isIconClass: $scope.layout.qHyperCube.qDimensionInfo[indexAux].isIconClass,
+                            type: $scope.layout.qHyperCube.qDimensionInfo[indexAux].type,
                             iconClass: $scope.layout.qHyperCube.qDimensionInfo[indexAux].iconClass,
                             showHelpIcon: $scope.layout.qHyperCube.qDimensionInfo[indexAux].showHelpIcon,
-                            isArrow: $scope.layout.qHyperCube.qDimensionInfo[indexAux].isArrow,
                             columnSize: $scope.layout.qHyperCube.qDimensionInfo[indexAux].columnSize
                         });
                     } else {
@@ -141,10 +140,9 @@ define([
                             textClass: $scope.layout.qHyperCube.qMeasureInfo[indexAux].textClass,
                             isSubtitle: $scope.layout.qHyperCube.qMeasureInfo[indexAux].isSubtitle,
                             textAlign: $scope.layout.qHyperCube.qMeasureInfo[indexAux].textAlign,
-                            isIconClass: $scope.layout.qHyperCube.qMeasureInfo[indexAux].isIconClass,
+                            type: $scope.layout.qHyperCube.qMeasureInfo[indexAux].type,
                             iconClass: $scope.layout.qHyperCube.qMeasureInfo[indexAux].iconClass,
                             showHelpIcon: $scope.layout.qHyperCube.qMeasureInfo[indexAux].showHelpIcon,
-                            isArrow: $scope.layout.qHyperCube.qMeasureInfo[indexAux].isArrow,
                             columnSize: $scope.layout.qHyperCube.qMeasureInfo[indexAux].columnSize
                         });
                     }

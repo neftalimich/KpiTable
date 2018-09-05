@@ -3,7 +3,7 @@
   "description": "Table + mini chart",
   "icon": "table",
   "type": "visualization",
-  "version": "0.2.2.0",
+  "version": "0.2.3.0",
   "author": "Neftalí Michelet",
   "homepage": "",
   "keywords": "qlik-sense, visualization",

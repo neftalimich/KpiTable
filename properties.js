@@ -64,7 +64,24 @@ define([
                         label: "Subtitle",
                         defaultValue: false
                     },
-                    icon: {
+                    type: {
+                        type: "string",
+                        component: "radiobuttons",
+                        label: "Type of Value",
+                        ref: "qDef.type",
+                        options: [{
+                            value: 0,
+                            label: "Normal"
+                        }, {
+                            value: 1,
+                            label: "HTML"
+                        }, {
+                            value: 2,
+                            label: "Icon"
+                        }],
+                        defaultValue: 0
+                    },
+                    showHelpIcon: {
                         type: "boolean",
                         ref: "qDef.showHelpIcon",
                         label: "Show Help Icon",
@@ -114,17 +131,22 @@ define([
                         label: "Subtitle",
                         defaultValue: false
                     },
-                    isIconClass: {
-                        type: "boolean",
-                        ref: "qDef.isIconClass",
-                        label: "Transform value to Icon",
-                        defaultValue: false
-                    },
-                    arrow: {
-                        type: "boolean",
-                        ref: "qDef.isArrow",
-                        label: "Flecha",
-                        defaultValue: false
+                    type: {
+                        type: "string",
+                        component: "radiobuttons",
+                        label: "Type of Value",
+                        ref: "qDef.type",
+                        options: [{
+                            value: 0,
+                            label: "Normal"
+                        }, {
+                            value: 1,
+                            label: "HTML"
+                            }, {
+                                value: 2,
+                                label: "Icon"
+                            }],
+                        defaultValue: 0
                     },
                     iconClass: {
                         type: "string",
