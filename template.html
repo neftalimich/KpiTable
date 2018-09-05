@@ -19,26 +19,26 @@
         </thead>
         <tbody>
             <tr ng-repeat-start="group in cubeGrouped track by $index" ng-init="$groupIndex = $index">
-                <td colspan="3" ng-show="group.category != ''" class="bg-white">
+                <td colspan="3" ng-show="group.category != ''" class="{{columnConfiguration[1].textClass}} bg-white">
                     <span class="text-group">{{group.category}}</span>
                 </td>
             </tr>
-            <tr ng-repeat="rowIndexAux in group.data track by $index" ng-init="$rowIndex = $index">
+            <tr ng-repeat="rowAux in group.data track by $index" ng-init="$rowIndex = $index">
                 <td rowspan="{{group.data.length}}" ng-show="$rowIndex == 0 && group.category != ''" class="text-center bg-white" style="max-width:25px !important;">
                     <div class="index-group" ng-show="layout.props.showGroupIndex">{{$groupIndex+1}}</div>
                 </td>
                 <td class="text-center" ng-show="layout.props.showRowIndex">
-                    <div class="index-row">{{group.idx[$rowIndex]+1}}</div>
+                    <div class="index-row">{{group.idxAux[$rowIndex]+1}}</div>
                 </td>
-                <td ng-repeat="cell in table.rows[rowIndexAux].cells track by $index"
+                <td ng-repeat="cell in table.rows[rowAux.index].cells track by $index"
                     ng-show="($index > 1 || ($index > 0 && !cubeIsGrouped)) && !columnConfiguration[$index].isSubtitle"
                     class="selectable {{columnConfiguration[$index].textAlign}}"
                     ng-class="{'selected': cell.selected}">
 
                     <!-- Cell -->
-                    <span class="{{columnConfiguration[$index].textClass}}">
+                    <span class="{{columnConfiguration[$index].textClass}} {{rowAux.item[$index].qAttrExps.qValues[0].qText}}">
                         <span ng-show="columnConfiguration[$index].type==0 || columnConfiguration[$index].type==null"
-                              ng-click="$index == 2 && GoUrl(table.rows[rowIndexAux].cells[0].qText)"
+                              ng-click="$index == 2 && GoUrl(table.rows[rowAux.index].cells[0].qText)"
                               style="font-size: {{layout.props.textSize}}">
                             {{cell.qText}}
                         </span>
@@ -48,14 +48,13 @@
                         <span ng-show="columnConfiguration[$index].type==2">
                             <i class="{{cell.qText}}"></i>
                         </span>
+                        <i class="{{columnConfiguration[$index].iconClass}}"></i>
                     </span><!-- Cell End -->
-
-                    <i class="{{columnConfiguration[$index].iconClass}}"></i>
-                    <i class="lui-icon lui-icon--help text-info" ng-click="ShowFrame(table.rows[rowIndexAux].cells[0].qText)" ng-show="columnConfiguration[$index].showHelpIcon"></i>
+                    <i class="lui-icon lui-icon--help text-info" ng-click="ShowFrame(table.rows[rowAux.index].cells[0].qText)" ng-show="columnConfiguration[$index].showHelpIcon"></i>
                     <!-- Subtitle -->
                     <span ng-show="$index==2">
                         <br />
-                        <span ng-repeat="subtitle in table.rows[rowIndexAux].cells"
+                        <span ng-repeat="subtitle in table.rows[rowAux.index].cells"
                               class="{{columnConfiguration[$index].textClass}} text-subtitle"
                               ng-show="columnConfiguration[$index].isSubtitle">
                             <span ng-show="columnConfiguration[$index].type==0 || columnConfiguration[$index].type==null">
@@ -72,8 +71,8 @@
                 </td>
                 <td ng-show="layout.props.showChart" class="text-center">
                     <div ng-style="{'height':layout.props.chartHeight,'width':layout.props.chartWidth}" style="margin:auto">
-                        <canvas id="{{ 'chart-' + table.rows[rowIndexAux].cells[0].qText }}"
-                                ng-click="GoUrl(table.rows[rowIndexAux].cells[0].qText)"></canvas>
+                        <canvas id="{{ 'chart-' + table.rows[rowAux.index].cells[0].qText }}"
+                                ng-click="GoUrl(table.rows[rowAux.index].cells[0].qText)"></canvas>
                     </div>
                 </td>
             </tr>

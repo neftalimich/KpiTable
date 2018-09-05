@@ -102,7 +102,7 @@ define([
                     textAlign: {
                         type: "string",
                         component: "dropdown",
-                        label: "Alinear",
+                        label: "Text Align",
                         ref: "qDef.textAlign",
                         options: [
                             {
@@ -117,7 +117,15 @@ define([
                                 label: "Derecha"
                             }
                         ],
-                        defaultValue: "text-left"
+                        defaultValue: "text-center"
+                    },
+                    expressionClass: {
+                        type: "string",
+                        component: "expression",
+                        ref: "qAttributeExpressions.0.qExpression",
+                        label: "Expression Class by Row",
+                        expression: "optional",
+                        defaultValue: ""
                     },
                     textClass: {
                         type: "string",
@@ -381,7 +389,7 @@ define([
                                 type: "number",
                                 ref: "props.chartHeight",
                                 label: "Chart Height",
-                                defaultValue: 40
+                                defaultValue: 60
                             },
                             chartWidth: {
                                 type: "number",
@@ -411,7 +419,7 @@ define([
                                 type: "number",
                                 ref: "props.chartPointHoverRadius",
                                 label: "Chart Point Hover Radius",
-                                defaultValue: 2
+                                defaultValue: 5
                             }
                         }
                     }

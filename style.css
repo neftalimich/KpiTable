@@ -20,17 +20,25 @@
     color: dodgerblue;
 }
 
+.qv-object-KpiTable .text-red {
+    color: RGB(255, 87, 51);
+}
+
 .qv-object-KpiTable .text-bold {
     font-weight: bold;
 }
 
 .qv-object-KpiTable .text-title {
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 14px !important;
+    font-weight: bold !important;
 }
 
 .qv-object-KpiTable .text-subtitle {
     font-size: 10px;
+}
+
+.qv-object-KpiTable .text-italic {
+    font-style: italic;
 }
 /*-------*/
 
@@ -58,7 +66,7 @@
 }
 
 .text-info {
-    color: dodgerblue;
+    color: deepskyblue;
 }
 
 /* EXTENSION */

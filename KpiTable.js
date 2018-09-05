@@ -68,34 +68,35 @@ define([
 
                         let categories = qMatrixCopy.reduce(function (obj, item, index) {
                             obj[item[1].qText] = obj[item[1].qText] || [];
-                            obj[item[1].qText].push(index);
+                            obj[item[1].qText].push({ index: index, item: item });
                             return obj;
                         }, {});
                         //console.log("categories", categories);
                         $scope.cubeIsGrouped = true;
 
                         $scope.cubeGrouped = Object.keys(categories).map(function (key) {
-                            return { category: key, data: categories[key], idx: [] };
+                            return { category: key, data: categories[key], idxAux: [] };
                         });
                         // ---------------- Index
                         let idxAux = 0;
                         angular.forEach($scope.cubeGrouped, function (group, key) {
                             angular.forEach(group.data, function (value, key) {
-                                group.idx.push(idxAux);
+                                group.idxAux.push(idxAux);
                                 idxAux += 1;
                             });
                         });
                         // ---------------- Index END
                     } else {
                         $scope.cubeIsGrouped = false;
-                        $scope.cubeGrouped.push({ category: "", data: [], idx: [] });
+                        $scope.cubeGrouped.push({ category: "", data: [], rowIndex: [], idxAux: [] });
                         let qMatrixCopy = [];
                         angular.forEach($scope.layout.qHyperCube.qDataPages, function (qDataPage, key) {
                             qMatrixCopy.push.apply(qMatrixCopy, JSON.parse(JSON.stringify(qDataPage.qMatrix)));
                         });
+                        $scope.cubeGrouped[0].data.push(qMatrixCopy);
                         for (let i = 0; i < qMatrixCopy.length; i++) {
-                            $scope.cubeGrouped[0].data.push(i);
-                            $scope.cubeGrouped[0].idx.push(i);
+                            $scope.cubeGrouped[0].rowIndex.push(i);                         
+                            $scope.cubeGrouped[0].idxAux.push(i);
                         }
                     }
                     //console.log("cubeGrouped",$scope.cubeGrouped); //OSUSER()
