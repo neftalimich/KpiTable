@@ -45,27 +45,27 @@
 
 /* GENERAL */
 
-.text-left {
+.qv-object-KpiTable .text-left {
     text-align: left !important;
 }
 
-.text-center {
+.qv-object-KpiTable .text-center {
     text-align: center !important;
 }
 
-.text-right {
+.qv-object-KpiTable .text-right {
     text-align: right !important;
 }
 
-.text-success {
+.qv-object-KpiTable .text-success {
     color: rgb(0,176,80);
 }
 
-.text-danger {
+.qv-object-KpiTable .text-danger {
     color: red;
 }
 
-.text-info {
+.qv-object-KpiTable .text-info {
     color: deepskyblue;
 }
 

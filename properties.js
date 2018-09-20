@@ -81,12 +81,12 @@ define([
                         }],
                         defaultValue: 0
                     },
-                    showHelpIcon: {
-                        type: "boolean",
-                        ref: "qDef.showHelpIcon",
-                        label: "Show Help Icon",
-                        defaultValue: false
-                    },
+                    //showHelpIcon: {
+                    //    type: "boolean",
+                    //    ref: "qDef.showHelpIcon",
+                    //    label: "Show Help Icon",
+                    //    defaultValue: false
+                    //},
                     columnSize: {
                         type: "string",
                         ref: "qDef.columnSize",
@@ -315,6 +315,20 @@ define([
                                 component: "switch",
                                 ref: "props.showRowIndex",
                                 label: "Show Row Index",
+                                options: [{
+                                    value: true,
+                                    label: "Yes"
+                                }, {
+                                    value: false,
+                                    label: "No"
+                                }],
+                                defaultValue: false
+                            },
+                            showHelpIcon: {
+                                type: "boolean",
+                                component: "switch",
+                                ref: "props.showHelpIcon",
+                                label: "Show Hel Icon",
                                 options: [{
                                     value: true,
                                     label: "Yes"

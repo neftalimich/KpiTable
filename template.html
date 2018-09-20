@@ -1,64 +1,50 @@
-<div qv-extension style="height: 100%; position: relative; overflow: auto;">
-    <table class="table-formated">
-        <thead>
-            <tr>
-                <th ng-show="cubeIsGrouped" ng-click="table.headers[1].orderBy()"></th>
-                <th ng-show="layout.props.showRowIndex"></th>
-                <th ng-repeat="head in table.headers track by $index"
-                    ng-show="($index > 1 || ($index > 0 && !cubeIsGrouped)) && !columnConfiguration[$index].isSubtitle"
-                    ng-click="head.orderBy()"
-                    class="{{columnConfiguration[$index].textAlign}}"
-                    ng-style="columnConfiguration[$index].columnSize!='' && {'width':columnConfiguration[$index].columnSize}"
-                    style="font-size: {{layout.props.headerSize}}">
-                    {{ table.headers[layout.qHyperCube.qColumnOrder[$index]].qFallbackTitle}}
-                </th>
-                <th ng-show="layout.props.showChart" class="text-center">
-                    Gr&aacute;fica
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat-start="group in cubeGrouped track by $index" ng-init="$groupIndex = $index">
-                <td colspan="3" ng-show="group.category != ''" class="{{columnConfiguration[1].textClass}} bg-white">
-                    <span class="text-group">{{group.category}}</span>
-                </td>
-            </tr>
-            <tr ng-repeat="rowAux in group.data track by $index" ng-init="$rowIndex = $index">
-                <td rowspan="{{group.data.length}}" ng-show="$rowIndex == 0 && group.category != ''" class="text-center bg-white" style="max-width:25px !important;">
-                    <div class="index-group" ng-show="layout.props.showGroupIndex">{{$groupIndex+1}}</div>
-                </td>
-                <td class="text-center" ng-show="layout.props.showRowIndex">
-                    <div class="index-row">{{group.idxAux[$rowIndex]+1}}</div>
-                </td>
-                <td ng-repeat="cell in table.rows[rowAux.index].cells track by $index"
-                    ng-show="($index > 1 || ($index > 0 && !cubeIsGrouped)) && !columnConfiguration[$index].isSubtitle"
-                    class="selectable {{columnConfiguration[$index].textAlign}}"
-                    ng-class="{'selected': cell.selected}">
-
-                    <!-- Cell -->
-                    <span class="{{columnConfiguration[$index].textClass}} {{rowAux.item[$index].qAttrExps.qValues[0].qText}}">
-                        <span ng-show="columnConfiguration[$index].type==0 || columnConfiguration[$index].type==null"
-                              ng-click="$index == 2 && GoUrl(table.rows[rowAux.index].cells[0].qText)"
-                              style="font-size: {{layout.props.textSize}}">
-                            {{cell.qText}}
-                        </span>
-                        <span ng-show="columnConfiguration[$index].type==1"
-                              ng-bind-html="cell.qText">
-                        </span>
-                        <span ng-show="columnConfiguration[$index].type==2">
-                            <i class="{{cell.qText}}"></i>
-                        </span>
-                        <i class="{{columnConfiguration[$index].iconClass}}"></i>
-                    </span><!-- Cell End -->
-                    <i class="lui-icon lui-icon--help text-info" ng-click="ShowFrame(table.rows[rowAux.index].cells[0].qText)" ng-show="columnConfiguration[$index].showHelpIcon"></i>
-                    <!-- Subtitle -->
-                    <span ng-show="$index==2">
-                        <br />
-                        <span ng-repeat="subtitle in table.rows[rowAux.index].cells"
-                              class="{{columnConfiguration[$index].textClass}} text-subtitle"
-                              ng-show="columnConfiguration[$index].isSubtitle">
-                            <span ng-show="columnConfiguration[$index].type==0 || columnConfiguration[$index].type==null">
-                                {{subtitle.qText}}
+<div id="kpitable-container" qv-extension style="height: 100%; width:100%; position: relative; overflow: auto;">
+    <div id="table-container">
+        <table id="maintable" class="table-formated">
+            <thead>
+                <tr>
+                    <th ng-show="cubeIsGrouped" ng-click="table.headers[1].orderBy()"></th>
+                    <th ng-show="layout.props.showRowIndex"></th>
+                    <th ng-show="layout.props.showHelpIcon"></th>
+                    <th ng-repeat="head in table.headers track by $index"
+                        ng-show="($index > 1 || ($index > 0 && !cubeIsGrouped)) && !columnConfiguration[$index].isSubtitle"
+                        ng-click="head.orderBy()"
+                        class="{{columnConfiguration[$index].textAlign}}"
+                        ng-style="columnConfiguration[$index].columnSize!='' && {'width':columnConfiguration[$index].columnSize}"
+                        style="font-size: {{layout.props.headerSize}}">
+                        {{ table.headers[layout.qHyperCube.qColumnOrder[$index]].qFallbackTitle}}
+                    </th>
+                    <th ng-show="layout.props.showChart" class="text-center">
+                        Gr&aacute;fica
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat-start="group in cubeGrouped track by $index" ng-init="$groupIndex = $index">
+                    <td colspan="{{2+(layout.props.showGroupIndex?1:0)+(layout.props.showHelpIcon?1:0)}}" ng-show="group.category != ''" class="{{columnConfiguration[1].textClass}} bg-white">
+                        <span class="text-group">{{group.category}}</span>
+                    </td>
+                </tr>
+                <tr ng-repeat="rowAux in group.data track by $index" ng-init="$rowIndex = $index">
+                    <td rowspan="{{group.data.length}}" ng-show="$rowIndex == 0 && group.category != ''" class="text-center bg-white" style="max-width:25px !important;">
+                        <div class="index-group" ng-show="layout.props.showGroupIndex">{{$groupIndex+1}}</div>
+                    </td>
+                    <td class="text-center" ng-show="layout.props.showRowIndex" style="max-width:20px;">
+                        <div class="index-row">{{group.idxAux[$rowIndex]+1}}</div>
+                    </td>
+                    <td class="text-right" ng-show="layout.props.showHelpIcon" style="max-width:10px;">
+                        <i class="lui-icon lui-icon--help text-info" ng-click="ShowFrame(table.rows[rowAux.index].cells[0].qText)"></i>
+                    </td>
+                    <td ng-repeat="cell in table.rows[rowAux.index].cells track by $index"
+                        ng-show="($index > 1 || ($index > 0 && !cubeIsGrouped)) && !columnConfiguration[$index].isSubtitle"
+                        class="selectable {{columnConfiguration[$index].textAlign}}"
+                        ng-class="{'selected': cell.selected}">
+                        <!-- Cell -->
+                        <span class="{{columnConfiguration[$index].textClass}} {{rowAux.item[$index].qAttrExps.qValues[0].qText}}">
+                            <span ng-show="columnConfiguration[$index].type==0 || columnConfiguration[$index].type==null"
+                                  ng-click="$index == 2 && GoUrl(table.rows[rowAux.index].cells[0].qText)"
+                                  style="font-size: {{layout.props.textSize}}">
+                                {{cell.qText}}
                             </span>
                             <span ng-show="columnConfiguration[$index].type==1"
                                   ng-bind-html="cell.qText">
@@ -66,20 +52,39 @@
                             <span ng-show="columnConfiguration[$index].type==2">
                                 <i class="{{cell.qText}}"></i>
                             </span>
-                        </span>
-                    </span><!-- Subtitle End -->
-                </td>
-                <td ng-show="layout.props.showChart" class="text-center">
-                    <div ng-style="{'height':layout.props.chartHeight,'width':layout.props.chartWidth}" style="margin:auto">
-                        <canvas id="{{ 'chart-' + table.rows[rowAux.index].cells[0].qText }}"
-                                ng-click="GoUrl(table.rows[rowAux.index].cells[0].qText)"></canvas>
-                    </div>
-                </td>
-            </tr>
-            <tr ng-repeat-end></tr>
-        </tbody>
-    </table>
-    <button ng-if="table.rowCount>table.rows.length" ng-click="table.getMoreData() && GetMoreData()" class="lui-button more">More...</button>
+                            <i class="{{columnConfiguration[$index].iconClass}}"></i>
+                        </span><!-- Cell End -->
+                        <!-- Subtitle -->
+                        <span ng-show="$index==2">
+                            <br />
+                            <span ng-repeat="subtitle in table.rows[rowAux.index].cells"
+                                  class="{{columnConfiguration[$index].textClass}} text-subtitle"
+                                  ng-show="columnConfiguration[$index].isSubtitle">
+                                <span ng-show="columnConfiguration[$index].type==0 || columnConfiguration[$index].type==null">
+                                    {{subtitle.qText}}
+                                </span>
+                                <span ng-show="columnConfiguration[$index].type==1"
+                                      ng-bind-html="cell.qText">
+                                </span>
+                                <span ng-show="columnConfiguration[$index].type==2">
+                                    <i class="{{cell.qText}}"></i>
+                                </span>
+                            </span>
+                        </span><!-- Subtitle End -->
+                    </td>
+                    <td ng-show="layout.props.showChart" class="text-center">
+                        <div ng-style="{'height':layout.props.chartHeight,'width':layout.props.chartWidth}" style="margin:auto">
+                            <canvas id="{{ 'chart-' + table.rows[rowAux.index].cells[0].qText }}"
+                                    ng-click="GoUrl(table.rows[rowAux.index].cells[0].qText)" style="width:100%;height:100%"></canvas>
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-repeat-end></tr>
+            </tbody>
+        </table>
+        <div id="bottom_anchor"></div>
+        <button ng-if="table.rowCount>table.rows.length" ng-click="table.getMoreData() && GetMoreData()" class="lui-button more">More...</button>
+    </div>
     <!-- iFrame -->
     <div ng-show="sFrame" style="position:absolute;border:none;width:99%;height:95%;top:0;left:50%;">
         <div style="position:relative;left:-50%;width:100%;height:100%;">
@@ -90,3 +95,54 @@
         </div>
     </div><!-- iFrame End-->
 </div>
+
+<script>
+    $(document).ready(function () {
+        function moveScroll() {
+            var containerTop = $("#kpitable-container").offset().top;
+            var scroll = $("#kpitable-container").scrollTop();
+            var anchor_top = $("#maintable").offset().top;
+            var anchor_bottom = $("#bottom_anchor").offset().top;
+            //console.log(scroll, anchor_top, anchor_bottom);
+            //console.log($("#maintable").width(), $("#clone").width());
+            if ($("#maintable").width() != $("#clone").width()) {
+                $("#clone").remove();
+            }
+            if (scroll + containerTop > anchor_top) {
+                clone_table = $("#clone");
+                if (clone_table.length == 0) {
+                    clone_table = $("#maintable").clone();
+                    clone_table.attr('id', 'clone');
+                    clone_table.css({
+                        position: 'fixed',
+                        'pointer-events': 'none',
+                        top: containerTop
+                    });
+                    clone_table.width($("#maintable").width());
+                    $("#table-container").append(clone_table);
+                    $("#clone").css({ visibility: 'hidden' });
+                    $("#clone thead").css({ visibility: 'visible' });
+                }
+            } else {
+                $("#clone").remove();
+            }
+        }
+        $("#kpitable-container").scroll(moveScroll);
+
+        $(window).resize(function () {
+            $("#clone").remove();
+        });
+
+        // Is not working :(
+        $("#table-container").resize(function () {
+            console.log("entra1");
+            $("#clone").remove();
+        });
+        // Is not working :(
+        example = document.getElementById('table-container');
+        example.addEventListener('onresize', function () {
+            console.log("entra2");
+            $("#clone").remove();
+        });
+    });
+</script>
