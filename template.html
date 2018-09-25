@@ -43,7 +43,7 @@
                         <span class="{{columnConfiguration[$index].textClass}} {{rowAux.item[$index].qAttrExps.qValues[0].qText}}">
                             <span ng-show="columnConfiguration[$index].type==0 || columnConfiguration[$index].type==null"
                                   ng-click="$index == 2 && GoUrl(table.rows[rowAux.index].cells[0].qText)"
-                                  style="font-size: {{layout.props.textSize}}">
+                                  ng-style="{'font-size':(columnConfiguration[$index].textSize != 0 ? columnConfiguration[$index].textSize + 'vw' : layout.props.textSize)}">
                                 {{cell.qText}}
                             </span>
                             <span ng-show="columnConfiguration[$index].type==1"
@@ -60,7 +60,8 @@
                             <span ng-repeat="subtitle in table.rows[rowAux.index].cells"
                                   class="{{columnConfiguration[$index].textClass}} text-subtitle"
                                   ng-show="columnConfiguration[$index].isSubtitle">
-                                <span ng-show="columnConfiguration[$index].type==0 || columnConfiguration[$index].type==null">
+                                <span ng-show="columnConfiguration[$index].type==0 || columnConfiguration[$index].type==null"
+                                      style="font-size: {{layout.props.subtitleTextSize}}">
                                     {{subtitle.qText}}
                                 </span>
                                 <span ng-show="columnConfiguration[$index].type==1"
@@ -91,7 +92,49 @@
             <button class="lui-button lui-button--success" ng-click="sFrame=false">
                 <i class="lui-icon lui-icon--close"></i>
             </button>
-            <iframe ng-src='{{idk}}' style='border:1px solid;width:100%;height:100%;'></iframe>
+            <div style="border:1px solid black;height:100%;width:100%;margin:auto;background-color: white">
+                <div style="height:35%;width:100%">
+                    <div style="float:left;height:50%;width:60%;">
+                        <div id="{{'QV01'+layout.qInfo.qId}}" style="float:left;width:30%;height:100%;"></div>
+                        <div id="{{'QV02'+layout.qInfo.qId}}" style="float:left;width:70%;height:100%;"></div>
+                        <div id="{{'QV03'+layout.qInfo.qId}}" style="float:left;width:100%;height:100%;"></div>
+                    </div>
+                    <div id="{{'QV04'+layout.qInfo.qId}}" style="float:left;width:40%;height:100%;"></div>
+                </div>
+                <div style="height:32.5%;width:100%">
+                    <div style="height:100%;width:30%;float:left;">
+                        <div id="{{'QV05'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                        <div id="{{'QV19'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                        <div id="{{'QV06'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                    </div>
+                    <div style="height:100%;width:30%;float:left;">
+                        <div style="height:100%;width:50%;float:left;">
+                            <div id="{{'QV07'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                            <div id="{{'QV08'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                            <div id="{{'QV09'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                        </div>
+                        <div style="height:100%;width:50%;float:left;">
+                            <div style="width:100%;height:33.33%;"></div>
+                            <div id="{{'QV11'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                            <div id="{{'QV12'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                        </div>
+                    </div>
+                    <div style="height:100%;width:40%;float:left;">
+                        <div id="{{'QV13'+layout.qInfo.qId}}" style="width:100%;height:100%;"></div>
+                    </div>
+                </div>
+                <div style="height:32.5%;width:100%">
+                    <div style="height:50%;width:60%;float:left;">
+                        <div id="{{'QV14'+layout.qInfo.qId}}" style="float:left;width:50%;height:100%;"></div>
+                        <div id="{{'QV15'+layout.qInfo.qId}}" style="float:left;width:25%;height:100%;"></div>
+                        <div id="{{'QV16'+layout.qInfo.qId}}" style="float:left;width:25%;height:100%;"></div>
+                        <div id="{{'QV17'+layout.qInfo.qId}}" style="float:left;width:100%;height:100%;"></div>
+                    </div>
+                    <div style="height:100%;width:40%;float:left;">
+                        <div id="{{'QV18'+layout.qInfo.qId}}" style="float:left;width:100%;height:100%;"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div><!-- iFrame End-->
 </div>

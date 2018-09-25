@@ -27,18 +27,29 @@
 .qv-object-KpiTable .text-bold {
     font-weight: bold;
 }
+.qv-object-KpiTable .text-italic {
+    font-style: italic;
+}
 
 .qv-object-KpiTable .text-title {
     font-size: 14px !important;
     font-weight: bold !important;
 }
-
 .qv-object-KpiTable .text-subtitle {
     font-size: 10px;
 }
 
-.qv-object-KpiTable .text-italic {
-    font-style: italic;
+.qv-object-KpiTable .font-size-8 {
+    font-size: 8px;
+}
+.qv-object-KpiTable .font-size-10 {
+    font-size: 10px;
+}
+.qv-object-KpiTable .font-size-12 {
+    font-size: 12px;
+}
+.qv-object-KpiTable .font-size-14 {
+    font-size: 14px;
 }
 /*-------*/
 

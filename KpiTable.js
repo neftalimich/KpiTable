@@ -31,6 +31,7 @@ define([
         },
         controller: ['$scope', function ($scope) {
             console.log("KpiTable - layout", $scope.layout);
+            $scope.kpiTableId = $scope.layout.qInfo.qId;
 
             // --------------------------- Watchers
             $scope.$watchCollection("layout.qHyperCube.qDataPages", function (newValue) {
@@ -133,7 +134,8 @@ define([
                             type: $scope.layout.qHyperCube.qDimensionInfo[indexAux].type,
                             iconClass: $scope.layout.qHyperCube.qDimensionInfo[indexAux].iconClass,
                             showHelpIcon: $scope.layout.qHyperCube.qDimensionInfo[indexAux].showHelpIcon,
-                            columnSize: $scope.layout.qHyperCube.qDimensionInfo[indexAux].columnSize
+                            columnSize: $scope.layout.qHyperCube.qDimensionInfo[indexAux].columnSize,
+                            textSize: $scope.layout.qHyperCube.qDimensionInfo[indexAux].textSize
                         });
                     } else {
                         indexAux = indexAux - $scope.layout.qHyperCube.qDimensionInfo.length;
@@ -144,7 +146,8 @@ define([
                             type: $scope.layout.qHyperCube.qMeasureInfo[indexAux].type,
                             iconClass: $scope.layout.qHyperCube.qMeasureInfo[indexAux].iconClass,
                             showHelpIcon: $scope.layout.qHyperCube.qMeasureInfo[indexAux].showHelpIcon,
-                            columnSize: $scope.layout.qHyperCube.qMeasureInfo[indexAux].columnSize
+                            columnSize: $scope.layout.qHyperCube.qMeasureInfo[indexAux].columnSize,
+                            textSize: $scope.layout.qHyperCube.qMeasureInfo[indexAux].textSize
                         });
                     }
                 });
@@ -166,10 +169,68 @@ define([
             // --------------------------- iFrame
             $scope.sFrame = false;
             $scope.origin = document.location.origin;
+            $scope.protocol = document.location.protocol;
             $scope.ShowFrame = function (id) {
-                //console.log("id: ",  $scope.layout.props.urlIframe, id);
+                //console.log("id: ", $scope.origin + $scope.layout.props.urlIframe, id);
                 $scope.sFrame = true;
-                $scope.idk = $scope.origin + $scope.layout.props.urlIframe + id;
+                //$scope.idk = $scope.origin + $scope.layout.props.urlIframe + id;
+
+                app.field("KPI_ID").selectMatch(id, !1);
+
+                app.visualization.get('DmEgZQe').then(function (vis) {
+                    vis.show("QV01" + $scope.kpiTableId);
+                });
+                app.visualization.get('JPGG').then(function (vis) {
+                    vis.show("QV02" + $scope.kpiTableId);
+                });
+                app.visualization.get('mwCjpFF').then(function (vis) {
+                    vis.show("QV03" + $scope.kpiTableId);
+                });
+                app.visualization.get('Mjkjwcr').then(function (vis) {
+                    vis.show("QV04" + $scope.kpiTableId);
+                });
+                app.visualization.get('SjjZWsE').then(function (vis) {
+                    vis.show("QV05" + $scope.kpiTableId);
+                });
+                app.visualization.get('adaAmT').then(function (vis) {
+                    vis.show("QV06" + $scope.kpiTableId);
+                });
+                app.visualization.get('USYtzd').then(function (vis) {
+                    vis.show("QV07" + $scope.kpiTableId);
+                });
+                app.visualization.get('EbZfLZT').then(function (vis) {
+                    vis.show("QV08" + $scope.kpiTableId);
+                });
+                app.visualization.get('DPGLNAd').then(function (vis) {
+                    vis.show("QV09" + $scope.kpiTableId);
+                });
+                app.visualization.get('JTMxZMZ').then(function (vis) {
+                    vis.show("QV11" + $scope.kpiTableId);
+                });
+                app.visualization.get('hKzwRPz').then(function (vis) {
+                    vis.show("QV12" + $scope.kpiTableId);
+                });
+                app.visualization.get('wzqLmCR').then(function (vis) {
+                    vis.show("QV13" + $scope.kpiTableId);
+                });
+                app.visualization.get('Pppvm').then(function (vis) {
+                    vis.show("QV14" + $scope.kpiTableId);
+                });
+                app.visualization.get('CGzSJqk').then(function (vis) {
+                    vis.show("QV15" + $scope.kpiTableId);
+                });
+                app.visualization.get('uEEjd').then(function (vis) {
+                    vis.show("QV16" + $scope.kpiTableId);
+                });
+                app.visualization.get('JbEZRf').then(function (vis) {
+                    vis.show("QV17" + $scope.kpiTableId);
+                });
+                app.visualization.get('BgLJ').then(function (vis) {
+                    vis.show("QV18" + $scope.kpiTableId);
+                });
+                app.visualization.get('pzFnee').then(function (vis) {
+                    vis.show("QV19" + $scope.kpiTableId);
+                });
             };
             // ---------------------------
 
@@ -190,7 +251,8 @@ define([
                     autoSort: false,
                     qSortCriterias: [
                         {
-                            qSortByAscii: 0
+                            qSortByAscii: 0,
+                            qSortByNumeric: 1
                         }
                     ]
                 },
@@ -427,10 +489,10 @@ define([
                                 },
                                 layout: {
                                     padding: {
-                                        left: $scope.layout.props.chartPointRadius,
-                                        right: $scope.layout.props.chartPointRadius,
-                                        top: $scope.layout.props.chartPointRadius,
-                                        bottom: $scope.layout.props.chartPointRadius
+                                        left: $scope.layout.props.chartPointHoverRadius,
+                                        right: $scope.layout.props.chartPointHoverRadius,
+                                        top: $scope.layout.props.chartPointHoverRadius,
+                                        bottom: $scope.layout.props.chartPointHoverRadius
                                     }
                                 },
                                 responsive: true,
