@@ -23,10 +23,9 @@ define([
         },
         paint: function () {
             //setup scope.table
-            //console.log("this", this);
             if (!this.$scope.table) {
                 this.$scope.table = qlik.table(this);
-                console.log("table", this.$scope.table);
+                console.log("KpiTable - table", this.$scope.table);
             }
             return qlik.Promise.resolve();
         },
@@ -103,7 +102,7 @@ define([
                     //console.log("cubeGrouped",$scope.cubeGrouped); //OSUSER()
                 }
             };
-
+            // ---------------------------
             $scope.PatchColumnOrder = function (columnOrder) {
                 let qColumnOrder = [];
                 let orderAux = columnOrder.split(",");
@@ -121,7 +120,7 @@ define([
                     }
                 ], false);
             };
-
+            // ---------------------------
             $scope.GetColumnConfiguration = function () {
                 $scope.columnConfiguration = [];
                 angular.forEach($scope.layout.qHyperCube.qColumnOrder, function (value, key) {
