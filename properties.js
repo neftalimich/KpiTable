@@ -81,17 +81,17 @@ define([
                         }],
                         defaultValue: 0
                     },
-                    //showHelpIcon: {
-                    //    type: "boolean",
-                    //    ref: "qDef.showHelpIcon",
-                    //    label: "Show Help Icon",
-                    //    defaultValue: false
-                    //},
                     columnSize: {
                         type: "string",
                         ref: "qDef.columnSize",
                         label: "Column Size (px & %)",
                         defaultValue: ""
+                    },
+                    textSize: {
+                        type: "number",
+                        ref: "qDef.columnTextSize",
+                        label: "Column text size",
+                        defaultValue: 0
                     }
                 }
             },
@@ -166,6 +166,12 @@ define([
                         type: "number",
                         ref: "qDef.columnSize",
                         label: "Column Size",
+                        defaultValue: 0
+                    },
+                    textSize: {
+                        type: "number",
+                        ref: "qDef.columnTextSize",
+                        label: "Column text size",
                         defaultValue: 0
                     }
                 }

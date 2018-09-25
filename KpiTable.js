@@ -9,7 +9,7 @@ define([
 ], function (qlik, $, initProps, props, cssContent, template, chart) {
     'use strict';
     $("<style>").html(cssContent).appendTo("head");
-    $('<link rel="stylesheet" type="text/css" href="/extensions/KpiTable/css/font-awesome.css">').html("").appendTo("head");
+    $('<link rel="stylesheet" type="text/css" href="/extensions/KpiTable/css/font-awesome.css">').appendTo("head");
     var app = qlik.currApp();
 
     return {
@@ -33,26 +33,27 @@ define([
         controller: ['$scope', function ($scope) {
             console.log("KpiTable - layout", $scope.layout);
 
+            // --------------------------- Watchers
             $scope.$watchCollection("layout.qHyperCube.qDataPages", function (newValue) {
                 $scope.ReloadCube();
             });
-
             $scope.$watchCollection("layout.qHyperCube.qDimensionInfo", function (newValue) {
                 $scope.GetColumnConfiguration();
             });
             $scope.$watchCollection("layout.qHyperCube.qMeasureInfo", function (newValue) {
                 $scope.GetColumnConfiguration();
             });
-
+            // ---------------------------
             $scope.$watchCollection("layout.props.categorize", function (newValue) {
                 $scope.ReloadCube();
             });
-
             $scope.$watchCollection("layout.props.columnOrder", function (newValue) {
                 $scope.PatchColumnOrder(newValue);
                 $scope.GetColumnConfiguration();
             });
+            // ---------------------------
 
+            // --------------------------- Process Cube 1
             $scope.ReloadCube = function () {
                 //console.log("qMatrix", $scope.layout.qHyperCube.qDataPages[0].qMatrix);
                 $scope.cubeGrouped = [];
@@ -150,7 +151,9 @@ define([
                 });
                 //console.log("columnConfiguration", $scope.columnConfiguration);
             };
+            // ---------------------------
 
+            // --------------------------- Extra
             $scope.GoUrl = function (id) {
                 //alert(id);
                 if (id.length > 0) {
@@ -161,16 +164,23 @@ define([
                     //window.location.href = $scope.layout.props.urlChart + id;
                 }
             };
-
-            $scope.origin = document.location.origin;
-
+            // --------------------------- iFrame
             $scope.sFrame = false;
+            $scope.origin = document.location.origin;
             $scope.ShowFrame = function (id) {
                 //console.log("id: ",  $scope.layout.props.urlIframe, id);
                 $scope.sFrame = true;
                 $scope.idk = $scope.origin + $scope.layout.props.urlIframe + id;
             };
+            // ---------------------------
 
+            // --------------------------- More Data
+            $scope.GetMoreData = function () {
+                $scope.ReloadCube();
+                $scope.NextPageCube2();
+                return true;
+            };
+            // ---------------------------
 
             // --------------------------- CUBE2
             var qDimensionTemplate = {
@@ -216,7 +226,9 @@ define([
                     }
                 }
             };
+            // ---------------------------
 
+            // --------------------------- Watchers
             $scope.$watchCollection("layout.cube2Dimensions", function (newVal) {
                 let qDimensions = [];
                 angular.forEach(newVal, function (value, key) {
@@ -280,14 +292,8 @@ define([
                     $scope.LoadCharts();
                 });
             });
-            // --------------------------- More Data
-
-            $scope.GetMoreData = function () {
-                $scope.ReloadCube();
-                $scope.NextPageCube2();
-                return true;
-            };
-
+            // ---------------------------
+            
             // --------------------------- CHART
             angular.element(document).ready(function () {
                 if ($scope.qDataPagesCube2.length == 0) {
@@ -296,7 +302,7 @@ define([
                 $scope.GroupDataChart();
                 $scope.LoadCharts();
             });
-
+            // ---------------------------
             $scope.currentPage = 1;
             $scope.qDataPagesCube2 = [];
             $scope.NextPageCube2 = function () {
@@ -319,7 +325,9 @@ define([
                     $scope.LoadCharts();
                 });
             };
+            // ---------------------------
 
+            // --------------------------- Group Chart
             $scope.GroupDataChart = function () {
                 //console.log("Cube2 - qDataPages", $scope.qDataPagesCube2);
                 if ($scope.layout.cube2.qHyperCube.qDimensionInfo.length > 0) {
@@ -353,6 +361,7 @@ define([
             };
             var charts = [];
             var canvas = [];
+            // ---------------------------
             $scope.ClearCharts = function () {
                 angular.forEach(charts, function (chart, key) {
                     let ctx = canvas[key][0].getContext('2d');
@@ -360,6 +369,7 @@ define([
                     chart.destroy();
                 });
             };
+            // ---------------------------
             $scope.LoadCharts = function () {
                 $scope.ClearCharts();
                 //console.log("dataGrouped", $scope.dataGrouped);
