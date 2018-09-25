@@ -328,7 +328,7 @@ define([
                                 type: "boolean",
                                 component: "switch",
                                 ref: "props.showHelpIcon",
-                                label: "Show Hel Icon",
+                                label: "Show Help Icon",
                                 options: [{
                                     value: true,
                                     label: "Yes"
