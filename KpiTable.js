@@ -173,6 +173,7 @@ define([
             $scope.ShowFrame = function (id) {
                 //console.log("id: ", $scope.origin + $scope.layout.props.urlIframe, id);
                 $scope.sFrame = true;
+
                 //$scope.idk = $scope.origin + $scope.layout.props.urlIframe + id;
 
                 app.field("KPI_ID").selectMatch(id, !1);
@@ -489,8 +490,8 @@ define([
                                 },
                                 layout: {
                                     padding: {
-                                        left: $scope.layout.props.chartPointHoverRadius,
-                                        right: $scope.layout.props.chartPointHoverRadius,
+                                        left: $scope.layout.props.chartPointHoverRadius + 3,
+                                        right: $scope.layout.props.chartPointHoverRadius + 3,
                                         top: $scope.layout.props.chartPointHoverRadius,
                                         bottom: $scope.layout.props.chartPointHoverRadius
                                     }

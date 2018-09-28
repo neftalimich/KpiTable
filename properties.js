@@ -88,10 +88,10 @@ define([
                         defaultValue: ""
                     },
                     textSize: {
-                        type: "number",
+                        type: "string",
                         ref: "qDef.textSize",
                         label: "Column text size",
-                        defaultValue: 0
+                        defaultValue: ""
                     }
                 }
             },
@@ -169,10 +169,10 @@ define([
                         defaultValue: 0
                     },
                     textSize: {
-                        type: "number",
+                        type: "string",
                         ref: "qDef.columnTextSize",
                         label: "Column text size",
-                        defaultValue: 0
+                        defaultValue: ""
                     }
                 }
             },
@@ -383,12 +383,6 @@ define([
                                 type: "string",
                                 ref: "props.textSize",
                                 label: "Text size",
-                                defaultValue: "1vw"
-                            },
-                            subtitleTextSize: {
-                                type: "string",
-                                ref: "props.subtitleTextSize",
-                                label: "Subtitle text size",
                                 defaultValue: "1vw"
                             }
                         }

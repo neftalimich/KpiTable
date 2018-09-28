@@ -9,20 +9,20 @@
                     <th ng-repeat="head in table.headers track by $index"
                         ng-show="($index > 1 || ($index > 0 && !cubeIsGrouped)) && !columnConfiguration[$index].isSubtitle"
                         ng-click="head.orderBy()"
-                        class="{{columnConfiguration[$index].textAlign}}"
+                        class="{{columnConfiguration[$index].textAlign}} text-type1"
                         ng-style="columnConfiguration[$index].columnSize!='' && {'width':columnConfiguration[$index].columnSize}"
                         style="font-size: {{layout.props.headerSize}}">
                         {{ table.headers[layout.qHyperCube.qColumnOrder[$index]].qFallbackTitle}}
                     </th>
-                    <th ng-show="layout.props.showChart" class="text-center">
+                    <th ng-show="layout.props.showChart" class="text-center text-type1" style="font-size: {{layout.props.headerSize}}">
                         Gr&aacute;fica
                     </th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat-start="group in cubeGrouped track by $index" ng-init="$groupIndex = $index">
-                    <td colspan="{{2+(layout.props.showGroupIndex?1:0)+(layout.props.showHelpIcon?1:0)}}" ng-show="group.category != ''" class="{{columnConfiguration[1].textClass}} bg-white">
-                        <span class="text-group">{{group.category}}</span>
+                    <td colspan="{{2+(layout.props.showGroupIndex ? 1:0)+(layout.props.showHelpIcon ? 1:0)}}" ng-show="group.category != ''" class="{{columnConfiguration[1].textClass}} bg-white">
+                        <span class="text-group text-type1">{{group.category}}</span>
                     </td>
                 </tr>
                 <tr ng-repeat="rowAux in group.data track by $index" ng-init="$rowIndex = $index">
@@ -37,13 +37,13 @@
                     </td>
                     <td ng-repeat="cell in table.rows[rowAux.index].cells track by $index"
                         ng-show="($index > 1 || ($index > 0 && !cubeIsGrouped)) && !columnConfiguration[$index].isSubtitle"
-                        class="selectable {{columnConfiguration[$index].textAlign}}"
+                        class="selectable {{columnConfiguration[$index].textAlign}} text-type1"
                         ng-class="{'selected': cell.selected}">
                         <!-- Cell -->
                         <span class="{{columnConfiguration[$index].textClass}} {{rowAux.item[$index].qAttrExps.qValues[0].qText}}">
                             <span ng-show="columnConfiguration[$index].type==0 || columnConfiguration[$index].type==null"
                                   ng-click="$index == 2 && GoUrl(table.rows[rowAux.index].cells[0].qText)"
-                                  ng-style="{'font-size':(columnConfiguration[$index].textSize != 0 ? columnConfiguration[$index].textSize + 'vw' : layout.props.textSize)}">
+                                  ng-style="{'font-size':(columnConfiguration[$index].textSize ? columnConfiguration[$index].textSize : layout.props.textSize)}">
                                 {{cell.qText}}
                             </span>
                             <span ng-show="columnConfiguration[$index].type==1"
@@ -58,10 +58,10 @@
                         <span ng-show="$index==2">
                             <br />
                             <span ng-repeat="subtitle in table.rows[rowAux.index].cells"
-                                  class="{{columnConfiguration[$index].textClass}} text-subtitle"
+                                  class="{{columnConfiguration[$index].textClass}} text-subtitle text-type1"
                                   ng-show="columnConfiguration[$index].isSubtitle">
                                 <span ng-show="columnConfiguration[$index].type==0 || columnConfiguration[$index].type==null"
-                                      style="font-size: {{layout.props.subtitleTextSize}}">
+                                      style="font-size: {{columnConfiguration[$index].textSize}}">
                                     {{subtitle.qText}}
                                 </span>
                                 <span ng-show="columnConfiguration[$index].type==1"
@@ -85,58 +85,59 @@
         </table>
         <div id="bottom_anchor"></div>
         <button ng-if="table.rowCount>table.rows.length" ng-click="table.getMoreData() && GetMoreData()" class="lui-button more">More...</button>
-    </div>
-    <!-- iFrame -->
-    <div ng-show="sFrame" style="position:absolute;border:none;width:99%;height:95%;top:0;left:50%;">
-        <div style="position:relative;left:-50%;width:100%;height:100%;">
-            <button class="lui-button lui-button--success" ng-click="sFrame=false">
-                <i class="lui-icon lui-icon--close"></i>
-            </button>
-            <div style="border:1px solid black;height:100%;width:100%;margin:auto;background-color: white">
-                <div style="height:35%;width:100%">
-                    <div style="float:left;height:50%;width:60%;">
-                        <div id="{{'QV01'+layout.qInfo.qId}}" style="float:left;width:30%;height:100%;"></div>
-                        <div id="{{'QV02'+layout.qInfo.qId}}" style="float:left;width:70%;height:100%;"></div>
-                        <div id="{{'QV03'+layout.qInfo.qId}}" style="float:left;width:100%;height:100%;"></div>
-                    </div>
-                    <div id="{{'QV04'+layout.qInfo.qId}}" style="float:left;width:40%;height:100%;"></div>
-                </div>
-                <div style="height:32.5%;width:100%">
-                    <div style="height:100%;width:30%;float:left;">
-                        <div id="{{'QV05'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
-                        <div id="{{'QV19'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
-                        <div id="{{'QV06'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
-                    </div>
-                    <div style="height:100%;width:30%;float:left;">
-                        <div style="height:100%;width:50%;float:left;">
-                            <div id="{{'QV07'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
-                            <div id="{{'QV08'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
-                            <div id="{{'QV09'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+        <!-- iFrame -->
+        <div id="iframe" ng-show="sFrame" style="position:absolute;border:none;width:99%;height:95%;top:0;left:50%;">
+            <div style="position:relative;left:-50%;width:100%;height:100%;">
+                <button class="lui-button lui-button--success" ng-click="sFrame=false">
+                    <i class="lui-icon lui-icon--close"></i>
+                </button>
+                <div style="border:1px solid black;height:100%;width:100%;margin:auto;background-color: white">
+                    <div style="height:35%;width:100%">
+                        <div style="float:left;height:50%;width:60%;">
+                            <div id="{{'QV01'+layout.qInfo.qId}}" style="float:left;width:30%;height:100%;"></div>
+                            <div id="{{'QV02'+layout.qInfo.qId}}" style="float:left;width:70%;height:100%;"></div>
+                            <div id="{{'QV03'+layout.qInfo.qId}}" style="float:left;width:100%;height:100%;"></div>
                         </div>
-                        <div style="height:100%;width:50%;float:left;">
-                            <div style="width:100%;height:33.33%;"></div>
-                            <div id="{{'QV11'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
-                            <div id="{{'QV12'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                        <div id="{{'QV04'+layout.qInfo.qId}}" style="float:left;width:40%;height:100%;"></div>
+                    </div>
+                    <div style="height:32.5%;width:100%">
+                        <div style="height:100%;width:30%;float:left;">
+                            <div id="{{'QV05'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                            <div id="{{'QV19'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                            <div id="{{'QV06'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                        </div>
+                        <div style="height:100%;width:30%;float:left;">
+                            <div style="height:100%;width:50%;float:left;">
+                                <div id="{{'QV07'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                                <div id="{{'QV08'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                                <div id="{{'QV09'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                            </div>
+                            <div style="height:100%;width:50%;float:left;">
+                                <div style="width:100%;height:33.33%;"></div>
+                                <div id="{{'QV11'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                                <div id="{{'QV12'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                            </div>
+                        </div>
+                        <div style="height:100%;width:40%;float:left;">
+                            <div id="{{'QV13'+layout.qInfo.qId}}" style="width:100%;height:100%;"></div>
                         </div>
                     </div>
-                    <div style="height:100%;width:40%;float:left;">
-                        <div id="{{'QV13'+layout.qInfo.qId}}" style="width:100%;height:100%;"></div>
-                    </div>
-                </div>
-                <div style="height:32.5%;width:100%">
-                    <div style="height:50%;width:60%;float:left;">
-                        <div id="{{'QV14'+layout.qInfo.qId}}" style="float:left;width:50%;height:100%;"></div>
-                        <div id="{{'QV15'+layout.qInfo.qId}}" style="float:left;width:25%;height:100%;"></div>
-                        <div id="{{'QV16'+layout.qInfo.qId}}" style="float:left;width:25%;height:100%;"></div>
-                        <div id="{{'QV17'+layout.qInfo.qId}}" style="float:left;width:100%;height:100%;"></div>
-                    </div>
-                    <div style="height:100%;width:40%;float:left;">
-                        <div id="{{'QV18'+layout.qInfo.qId}}" style="float:left;width:100%;height:100%;"></div>
+                    <div style="height:32.5%;width:100%">
+                        <div style="height:50%;width:60%;float:left;">
+                            <div id="{{'QV14'+layout.qInfo.qId}}" style="float:left;width:50%;height:100%;"></div>
+                            <div id="{{'QV15'+layout.qInfo.qId}}" style="float:left;width:25%;height:100%;"></div>
+                            <div id="{{'QV16'+layout.qInfo.qId}}" style="float:left;width:25%;height:100%;"></div>
+                            <div id="{{'QV17'+layout.qInfo.qId}}" style="float:left;width:100%;height:100%;"></div>
+                        </div>
+                        <div style="height:100%;width:40%;float:left;">
+                            <div id="{{'QV18'+layout.qInfo.qId}}" style="float:left;width:100%;height:100%;"></div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div><!-- iFrame End-->
+        </div><!-- iFrame End-->
+    </div>
+    
 </div>
 
 <script>
@@ -169,6 +170,12 @@
             } else {
                 $("#clone").remove();
             }
+            $("#iframe").css({
+                position: 'fixed',
+                top: containerTop,
+                left: '50%',
+                'z-index': 9999
+            }).width($("#maintable").width());
         }
         $("#kpitable-container").scroll(moveScroll);
 

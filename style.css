@@ -1,5 +1,9 @@
 
 /* CUSTOM */
+
+.qv-object-KpiTable .text-type1 {
+    font-family: Circular Bold !important;
+}
 .qv-object-KpiTable .text-primary {
     color: darkblue;
 }
@@ -69,15 +73,15 @@
 }
 
 .qv-object-KpiTable .text-success {
-    color: rgb(0,176,80);
+    color: #008000;
 }
 
 .qv-object-KpiTable .text-danger {
-    color: red;
+    color: #D60D2B;
 }
 
 .qv-object-KpiTable .text-info {
-    color: deepskyblue;
+    color: #67BEE7;
 }
 
 /* EXTENSION */
@@ -90,6 +94,11 @@
     width: 100%;
 }
 
+.qv-object-KpiTable .more {
+    color: #0065B2;
+    background-color: #F5D328;
+}
+
 .qv-object-KpiTable .text-group {
     color: midnightblue;
     font-size: 20px;
@@ -97,7 +106,7 @@
 
 .qv-object-KpiTable .index-group {
     border-color: darkblue;
-    background-color: midnightblue;
+    background-color: #0065B2;
     color: white;
     width: 20px;
     height: 20px;
@@ -110,9 +119,9 @@
 
 .qv-object-KpiTable .index-row {
     border: 1px solid;
-    border-color: lightsteelblue;
-    background-color: lightsteelblue;
-    color: midnightblue;
+    border-color: #0065B2;
+    background-color: #0065B2;
+    color: #DADCDE;
     width: 15px;
     height: 15px;
     font-size: 10px;
@@ -163,7 +172,7 @@
 }
 
     .qv-object-KpiTable .table-formated > thead {
-        background-color: midnightblue;
+        background-color: #0065B2;
         color: white;
     }
 
