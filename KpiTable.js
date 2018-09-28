@@ -151,7 +151,7 @@ define([
                         });
                     }
                 });
-                //console.log("columnConfiguration", $scope.columnConfiguration);
+                console.log("columnConfiguration", $scope.columnConfiguration);
             };
             // ---------------------------
 
