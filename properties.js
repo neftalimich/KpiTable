@@ -170,7 +170,7 @@ define([
                     },
                     textSize: {
                         type: "string",
-                        ref: "qDef.columnTextSize",
+                        ref: "qDef.textSize",
                         label: "Column text size",
                         defaultValue: ""
                     }
