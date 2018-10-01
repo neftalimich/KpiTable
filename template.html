@@ -21,7 +21,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat-start="group in cubeGrouped track by $index" ng-init="$groupIndex = $index">
-                    <td colspan="{{2+(layout.props.showGroupIndex ? 1:0)+(layout.props.showHelpIcon ? 1:0)}}" ng-show="group.category != ''" class="{{columnConfiguration[1].textClass}} bg-white">
+                    <td colspan="{{3+(layout.props.showGroupIndex ? 1:0)+(layout.props.showHelpIcon ? 1:0)}}" ng-show="group.category != ''" class="{{columnConfiguration[1].textClass}} bg-white">
                         <span class="text-group text-type1">{{group.category}}</span>
                     </td>
                 </tr>
@@ -29,10 +29,10 @@
                     <td rowspan="{{group.data.length}}" ng-show="$rowIndex == 0 && group.category != ''" class="text-center bg-white" style="max-width:25px !important;">
                         <div class="index-group" ng-show="layout.props.showGroupIndex">{{$groupIndex+1}}</div>
                     </td>
-                    <td class="text-center" ng-show="layout.props.showRowIndex" style="max-width:20px;">
+                    <td class="text-center" ng-show="layout.props.showRowIndex" style="max-width:20px !important;">
                         <div class="index-row">{{group.idxAux[$rowIndex]+1}}</div>
                     </td>
-                    <td class="text-right" ng-show="layout.props.showHelpIcon" style="max-width:10px;">
+                    <td class="text-right" ng-show="layout.props.showHelpIcon" style="max-width:10px !important;">
                         <i class="lui-icon lui-icon--help text-info" ng-click="ShowFrame(table.rows[rowAux.index].cells[0].qText)"></i>
                     </td>
                     <td ng-repeat="cell in table.rows[rowAux.index].cells track by $index"
