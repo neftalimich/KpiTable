@@ -89,14 +89,13 @@ define([
                         // ---------------- Index END
                     } else {
                         $scope.cubeIsGrouped = false;
-                        $scope.cubeGrouped.push({ category: "", data: [], rowIndex: [], idxAux: [] });
+                        $scope.cubeGrouped.push({ category: "", data: [], idxAux: [] });
                         let qMatrixCopy = [];
                         angular.forEach($scope.layout.qHyperCube.qDataPages, function (qDataPage, key) {
                             qMatrixCopy.push.apply(qMatrixCopy, JSON.parse(JSON.stringify(qDataPage.qMatrix)));
                         });
-                        $scope.cubeGrouped[0].data.push(qMatrixCopy);
                         for (let i = 0; i < qMatrixCopy.length; i++) {
-                            $scope.cubeGrouped[0].rowIndex.push(i);                         
+                            $scope.cubeGrouped[0].data.push({ index: i, item: qMatrixCopy[i] });                        
                             $scope.cubeGrouped[0].idxAux.push(i);
                         }
                     }
