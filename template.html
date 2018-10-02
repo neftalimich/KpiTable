@@ -84,7 +84,10 @@
             </tbody>
         </table>
         <div id="bottom_anchor"></div>
-        <button ng-if="table.rowCount>table.rows.length" ng-click="table.getMoreData() && GetMoreData()" class="lui-button more">Mostrar m&aacute;s...</button>
+        <button ng-if="table.rowCount>table.rows.length" ng-click="GetMoreData(table)" class="lui-button more">
+            Mostrar m&aacute;s...
+            <i ng-show="loading" class="fas fa-spinner fa-lg fa-spin"></i>
+        </button>
         <!-- iFrame -->
         <div id="iframe" ng-show="sFrame" style="position:absolute;border:none;width:99%;height:85%;top:0;left:50%;">
             <div style="position:relative;left:-50%;width:100%;height:100%;">
@@ -137,7 +140,11 @@
             </div>
         </div><!-- iFrame End-->
     </div>
-    
+</div>
+<div ng-show="loading" style="width:100%;height:100%;position:absolute;top:0px;left:0;z-index:9999;background-color: rgba(0,0,0,.2)" class="text-center">
+    <div style="position:relative;top:40%;">
+        <i class="fas fa-spinner fa-spin loadingIcon"></i>
+    </div>
 </div>
 
 <script>

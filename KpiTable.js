@@ -95,7 +95,7 @@ define([
                             qMatrixCopy.push.apply(qMatrixCopy, JSON.parse(JSON.stringify(qDataPage.qMatrix)));
                         });
                         for (let i = 0; i < qMatrixCopy.length; i++) {
-                            $scope.cubeGrouped[0].data.push({ index: i, item: qMatrixCopy[i] });                        
+                            $scope.cubeGrouped[0].data.push({ index: i, item: qMatrixCopy[i] });
                             $scope.cubeGrouped[0].idxAux.push(i);
                         }
                     }
@@ -235,7 +235,29 @@ define([
             // ---------------------------
 
             // --------------------------- More Data
-            $scope.GetMoreData = function () {
+            $scope.loading = false;
+            $scope.GetMoreData = function (table) {
+                if (table.rowCount > table.rows.length) {
+                    $scope.loading = true;
+                    table.getMoreData()
+                        .then(val => {
+                            //console.log("End");
+                        })
+                        .catch(err => {
+                            if (err) {
+                                console.log("error", err);
+                            } else {
+                                //console.log("Reloading");
+                            }
+                            $scope.table = null;
+                        })
+                        .finally(f => {
+                            $scope.loading = false;
+                        });
+
+                } else {
+                    $scope.ProcessDataPages();
+                }
                 $scope.ReloadCube();
                 $scope.NextPageCube2();
                 return true;
@@ -354,7 +376,7 @@ define([
                 });
             });
             // ---------------------------
-            
+
             // --------------------------- CHART
             angular.element(document).ready(function () {
                 if ($scope.qDataPagesCube2.length == 0) {

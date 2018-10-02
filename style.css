@@ -192,3 +192,22 @@
     .qv-object-KpiTable .table-formated > tbody > tr:nth-child(even) {
         background-color: #f2f2f2;
     }
+
+
+@media screen and (max-width: 299px) {
+    .loadingIcon {
+        font-size: 5em;
+    }
+}
+
+@media screen and (min-width: 300px) and (max-width: 799px) {
+    .loadingIcon {
+        font-size: 10em;
+    }
+}
+
+@media screen and (min-width: 800px) {
+    .loadingIcon {
+        font-size: 18em;
+    }
+}
