@@ -88,57 +88,6 @@
             Mostrar m&aacute;s...
             <i ng-show="loading" class="fas fa-spinner fa-lg fa-spin"></i>
         </button>
-        <!-- iFrame -->
-        <div id="iframe" ng-show="sFrame" style="position:absolute;border:none;width:99%;height:85%;top:0;left:50%;">
-            <div style="position:relative;left:-50%;width:100%;height:100%;">
-                <button class="lui-button lui-button--success" ng-click="sFrame=false">
-                    <i class="lui-icon lui-icon--close"></i>
-                </button>
-                <div style="border:1px solid black;height:100%;width:100%;margin:auto;background-color: white">
-                    <div style="height:35%;width:100%">
-                        <div style="float:left;height:50%;width:60%;">
-                            <div id="{{'QV01'+layout.qInfo.qId}}" style="float:left;width:30%;height:40%;"></div>
-                            <div id="{{'QV02'+layout.qInfo.qId}}" style="float:left;width:100%;height:100%;"></div>
-                            <div id="{{'QV03'+layout.qInfo.qId}}" style="float:left;width:100%;height:100%;"></div>
-                        </div>
-                        <div id="{{'QV04'+layout.qInfo.qId}}" style="float:left;width:40%;height:100%;"></div>
-                    </div>
-                    <div style="height:32.5%;width:100%">
-                        <div style="height:100%;width:30%;float:left;">
-                            <div id="{{'QV05'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
-                            <div id="{{'QV19'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
-                            <div id="{{'QV06'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
-                        </div>
-                        <div style="height:100%;width:30%;float:left;">
-                            <div style="height:100%;width:50%;float:left;">
-                                <div id="{{'QV07'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
-                                <div id="{{'QV08'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
-                                <div id="{{'QV09'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
-                            </div>
-                            <div style="height:100%;width:50%;float:left;">
-                                <div style="width:100%;height:33.33%;"></div>
-                                <div id="{{'QV11'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
-                                <div id="{{'QV12'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
-                            </div>
-                        </div>
-                        <div style="height:100%;width:40%;float:left;">
-                            <div id="{{'QV13'+layout.qInfo.qId}}" style="width:100%;height:100%;"></div>
-                        </div>
-                    </div>
-                    <div style="height:32.5%;width:100%">
-                        <div style="height:50%;width:60%;float:left;">
-                            <div id="{{'QV14'+layout.qInfo.qId}}" style="float:left;width:50%;height:100%;"></div>
-                            <div id="{{'QV15'+layout.qInfo.qId}}" style="float:left;width:25%;height:100%;"></div>
-                            <div id="{{'QV16'+layout.qInfo.qId}}" style="float:left;width:25%;height:100%;"></div>
-                            <div id="{{'QV17'+layout.qInfo.qId}}" style="float:left;width:100%;height:100%;"></div>
-                        </div>
-                        <div style="height:100%;width:40%;float:left;">
-                            <div id="{{'QV18'+layout.qInfo.qId}}" style="float:left;width:100%;height:100%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- iFrame End-->
     </div>
 </div>
 <div ng-show="loading" style="width:100%;height:100%;position:absolute;top:0px;left:0;z-index:9999;background-color: rgba(0,0,0,.2)" class="text-center">
@@ -146,6 +95,58 @@
         <i class="fas fa-spinner fa-spin loadingIcon"></i>
     </div>
 </div>
+
+<!-- iFrame -->
+<div id="iframe" ng-show="sFrame" style="position:fixed;top:44px;left:8%;height:80%;width:84%;border:none;z-index:9999;">
+    <div style="width:100%;height:100%;">
+        <button class="lui-button lui-button--success" ng-click="sFrame=false">
+            <i class="lui-icon lui-icon--close"></i>
+        </button>
+        <div style="border:1px solid black;height:100%;width:100%;margin:auto;background-color: white">
+            <div style="height:35%;width:100%">
+                <div style="float:left;height:50%;width:60%;">
+                    <div id="{{'QV01'+layout.qInfo.qId}}" style="float:left;width:30%;height:40%;"></div>
+                    <div id="{{'QV02'+layout.qInfo.qId}}" style="float:left;width:100%;height:100%;"></div>
+                    <div id="{{'QV03'+layout.qInfo.qId}}" style="float:left;width:100%;height:100%;"></div>
+                </div>
+                <div id="{{'QV04'+layout.qInfo.qId}}" style="float:left;width:40%;height:100%;"></div>
+            </div>
+            <div style="height:32.5%;width:100%">
+                <div style="height:100%;width:30%;float:left;">
+                    <div id="{{'QV05'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                    <div id="{{'QV19'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                    <div id="{{'QV06'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                </div>
+                <div style="height:100%;width:30%;float:left;">
+                    <div style="height:100%;width:50%;float:left;">
+                        <div id="{{'QV07'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                        <div id="{{'QV08'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                        <div id="{{'QV09'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                    </div>
+                    <div style="height:100%;width:50%;float:left;">
+                        <div style="width:100%;height:33.33%;"></div>
+                        <div id="{{'QV11'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                        <div id="{{'QV12'+layout.qInfo.qId}}" style="width:100%;height:33.33%;"></div>
+                    </div>
+                </div>
+                <div style="height:100%;width:40%;float:left;">
+                    <div id="{{'QV13'+layout.qInfo.qId}}" style="width:100%;height:100%;"></div>
+                </div>
+            </div>
+            <div style="height:32.5%;width:100%">
+                <div style="height:50%;width:60%;float:left;">
+                    <div id="{{'QV14'+layout.qInfo.qId}}" style="float:left;width:50%;height:100%;"></div>
+                    <div id="{{'QV15'+layout.qInfo.qId}}" style="float:left;width:25%;height:100%;"></div>
+                    <div id="{{'QV16'+layout.qInfo.qId}}" style="float:left;width:25%;height:100%;"></div>
+                    <div id="{{'QV17'+layout.qInfo.qId}}" style="float:left;width:100%;height:100%;"></div>
+                </div>
+                <div style="height:100%;width:40%;float:left;">
+                    <div id="{{'QV18'+layout.qInfo.qId}}" style="float:left;width:100%;height:100%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- iFrame End-->
 
 <script>
     $(document).ready(function () {
