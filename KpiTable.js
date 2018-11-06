@@ -25,12 +25,10 @@ define([
             //setup scope.table
             if (!this.$scope.table) {
                 this.$scope.table = qlik.table(this);
-                console.log("KpiTable - table", this.$scope.table);
             }
             return qlik.Promise.resolve();
         },
         controller: ['$scope', function ($scope) {
-            console.log("KpiTable - layout", $scope.layout);
             $scope.kpiTableId = $scope.layout.qInfo.qId;
 
             // --------------------------- Watchers
@@ -55,7 +53,6 @@ define([
 
             // --------------------------- Process Cube 1
             $scope.ReloadCube = function () {
-                //console.log("qMatrix", $scope.layout.qHyperCube.qDataPages[0].qMatrix);
                 $scope.cubeGrouped = [];
                 if ($scope.layout.qHyperCube.qDataPages[0].qMatrix[0].length > 2) {
                     if ($scope.layout.props.categorize) { // IsCategory
@@ -65,14 +62,11 @@ define([
                             qMatrixCopy.push.apply(qMatrixCopy, JSON.parse(JSON.stringify(qDataPage.qMatrix)));
                         });
 
-                        //console.log("qMatrixCopy", qMatrixCopy);
-
                         let categories = qMatrixCopy.reduce(function (obj, item, index) {
                             obj[item[1].qText] = obj[item[1].qText] || [];
                             obj[item[1].qText].push({ index: index, item: item });
                             return obj;
                         }, {});
-                        //console.log("categories", categories);
                         $scope.cubeIsGrouped = true;
 
                         $scope.cubeGrouped = Object.keys(categories).map(function (key) {
@@ -99,7 +93,6 @@ define([
                             $scope.cubeGrouped[0].idxAux.push(i);
                         }
                     }
-                    //console.log("cubeGrouped",$scope.cubeGrouped); //OSUSER()
                 }
             };
             // ---------------------------
@@ -150,7 +143,6 @@ define([
                         });
                     }
                 });
-                //console.log("columnConfiguration", $scope.columnConfiguration);
             };
             // ---------------------------
 
@@ -170,7 +162,6 @@ define([
             $scope.origin = document.location.origin;
             $scope.protocol = document.location.protocol;
             $scope.ShowFrame = function (id) {
-                //console.log("id: ", $scope.origin + $scope.layout.props.urlIframe, id);
                 $scope.sFrame = true;
 
                 //$scope.idk = $scope.origin + $scope.layout.props.urlIframe + id;
@@ -231,6 +222,9 @@ define([
                 app.visualization.get('pzFnee').then(function (vis) {
                     vis.show("QV19" + $scope.kpiTableId);
                 });
+				app.visualization.get('rkQusU').then(function (vis) {
+                    vis.show("QV20" + $scope.kpiTableId);
+                });
             };
             // ---------------------------
 
@@ -241,13 +235,10 @@ define([
                     $scope.loading = true;
                     table.getMoreData()
                         .then(val => {
-                            //console.log("End");
                         })
                         .catch(err => {
                             if (err) {
-                                console.log("error", err);
                             } else {
-                                //console.log("Reloading");
                             }
                             $scope.table = null;
                         })
@@ -397,7 +388,6 @@ define([
                 }];
 
                 $scope.ext.model.getHyperCubeData('/cube2/qHyperCubeDef', requestPage).then(function (value) {
-                    //console.log("page " + $scope.currentPage, value[0]);
                     if ($scope.qDataPagesCube2.length == $scope.currentPage) {
                         $scope.qDataPagesCube2.push(value[0]);
                     } else {
@@ -412,14 +402,12 @@ define([
 
             // --------------------------- Group Chart
             $scope.GroupDataChart = function () {
-                //console.log("Cube2 - qDataPages", $scope.qDataPagesCube2);
                 if ($scope.layout.cube2.qHyperCube.qDimensionInfo.length > 0) {
                     if ($scope.qDataPagesCube2[0].qMatrix[0].length > 2) {
                         let qMatrixCopy = [];
                         angular.forEach($scope.qDataPagesCube2, function (qDataPage, key) {
                             qMatrixCopy.push.apply(qMatrixCopy, JSON.parse(JSON.stringify(qDataPage.qMatrix)));
                         });
-                        //console.log(qMatrixCopy);
                         var groups = qMatrixCopy.reduce(function (obj, item) {
                             obj[item[0].qText] = obj[item[0].qText] || [];
                             obj[item[0].qText].push(item);
@@ -439,7 +427,6 @@ define([
                             });
                         });
                     }
-                    //console.log($scope.dataGrouped);
                 }
             };
             var charts = [];
@@ -455,7 +442,6 @@ define([
             // ---------------------------
             $scope.LoadCharts = function () {
                 $scope.ClearCharts();
-                //console.log("dataGrouped", $scope.dataGrouped);
                 let dimLength = $scope.layout.cube2.qHyperCube.qDimensionInfo.length;
                 let meaLength = $scope.layout.cube2.qHyperCube.qMeasureInfo.length;
 
