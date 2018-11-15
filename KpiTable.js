@@ -237,21 +237,33 @@ define([
                         .then(val => {
                         })
                         .catch(err => {
-                            if (err) {
-                            } else {
-                            }
                             $scope.table = null;
                         })
                         .finally(f => {
                             $scope.loading = false;
+                            $scope.ReloadCube();
+                            $scope.NextPageCube2();
                         });
 
-                } else {
-                    $scope.ProcessDataPages();
                 }
-                $scope.ReloadCube();
-                $scope.NextPageCube2();
+               
                 return true;
+            };
+            $scope.RefreshHeader = function () {
+                let clone_table = $("#clone");
+                clone_table.remove();
+
+                clone_table = $("#maintable").clone();
+                clone_table.attr('id', 'clone');
+                clone_table.css({
+                    position: 'fixed',
+                    'pointer-events': 'none',
+                    top: $("#kpitable-container").offset().top
+                });
+                clone_table.width($("#maintable").width());
+                $("#table-container").append(clone_table);
+                $("#clone").css({ visibility: 'hidden' });
+                $("#clone thead").css({ visibility: 'visible' });
             };
             // ---------------------------
 
@@ -522,6 +534,7 @@ define([
                         canvas[key] = canva;
                     }
                 });
+                $scope.RefreshHeader();
             };
             // ---------------------------
         }]
