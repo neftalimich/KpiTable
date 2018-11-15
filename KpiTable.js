@@ -244,14 +244,20 @@ define([
                         })
                         .finally(f => {
                             $scope.loading = false;
+                            $scope.ReloadCube();
+                            $scope.NextPageCube2();
+                            $scope.RefreshHeader();
                         });
 
                 } else {
                     $scope.ProcessDataPages();
                 }
-                $scope.ReloadCube();
-                $scope.NextPageCube2();
+               
                 return true;
+            };
+            $scope.RefreshHeader = function () {
+                let clone_table = $("#clone");
+                clone_table.remove();                
             };
             // ---------------------------
 
