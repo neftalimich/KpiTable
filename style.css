@@ -1,8 +1,10 @@
 
 /* CUSTOM */
-
+.ticker-color{
+	color: #696969;
+}
 .qv-object-KpiTable .text-type1 {
-    font-family: Circular Bold !important;
+    font-family: QlikView Sans,sans-serif; !important;
 }
 .qv-object-KpiTable .text-primary {
     color: darkblue;
@@ -132,7 +134,7 @@
 }
 
 .qv-object-KpiTable .bg-white {
-    background-color: white !important;
+    background-color: #eaeef1 !important;
 }
 
 .qv-object-KpiTable .iFrame-Container {
@@ -172,8 +174,8 @@
 }
 
     .qv-object-KpiTable .table-formated > thead {
-        background-color: #0065B2;
-        color: white;
+        background-color: #003366;
+        color: #f6f6f7;
     }
 
         .qv-object-KpiTable .table-formated > thead > tr {
