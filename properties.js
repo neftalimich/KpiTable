@@ -384,6 +384,20 @@ define([
                                 ref: "props.textSize",
                                 label: "Text size",
                                 defaultValue: "1vw"
+                            },
+                            snapshotEnabled: {
+                                type: "boolean",
+                                component: "switch",
+                                ref: "props.snapshotEnabled",
+                                label: "Snapshot Enabled",
+                                options: [{
+                                    value: true,
+                                    label: "Yes"
+                                }, {
+                                    value: false,
+                                    label: "No"
+                                }],
+                                defaultValue: true
                             }
                         }
                     },

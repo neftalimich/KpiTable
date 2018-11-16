@@ -17,7 +17,9 @@ define([
         initialProperties: initProps,
         definition: props,
         support: {
-            snapshot: true,
+            snapshot: function(layout) {
+                return layout.props.snapshotEnabled;
+            },
             export: true,
             exportData: true
         },
