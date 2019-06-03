@@ -4,7 +4,7 @@
 	color: #696969;
 }
 .qv-object-KpiTable .text-type1 {
-    font-family: QlikView Sans,sans-serif; !important;
+    font-family: QlikView Sans,sans-serif !important;
 }
 .qv-object-KpiTable .text-primary {
     color: darkblue;
@@ -89,7 +89,8 @@
 /* EXTENSION */
 
 .qv-object-KpiTable div.qv-object-content-container {
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x:hidden;
 }
 
 .qv-object-KpiTable button {
@@ -114,8 +115,8 @@
     height: 20px;
     font-size: 15px;
     font-weight: bold;
-    border-radius: 18px;
-    padding: 3px;
+    border-radius: 20px;
+    padding: 4px;
     margin: auto;
 }
 
